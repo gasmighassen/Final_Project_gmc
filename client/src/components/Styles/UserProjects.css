@@ -1,0 +1,69 @@
+.projectsWrap {
+  background-color: rgb(243, 240, 240);
+  width: 80%;
+}
+
+.paths {
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+}
+.pathText {
+  margin-left: 3%;
+  padding: 1% 0;
+}
+.counter {
+  margin-left: 3%;
+  padding: 1% 0;
+}
+.pathText a {
+  text-decoration: none;
+}
+.pathText a:link {
+  color: #1a2bc2;
+}
+.pathText a:active {
+  color: #a3d6fa;
+}
+.pathText a:visited {
+  color: #1a2bc2;
+}
+.SearchProjects {
+  margin: 30px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
+.search {
+  border: 1px #1a2bc2 solid;
+  border-radius: 5px;
+  padding: 10px;
+  outline: none;
+  width: 100%;
+}
+.searchBtn {
+  width: 15%;
+  background-color: #1a2bc2;
+  text-decoration: none;
+  border: none;
+  padding: 15px 15px;
+  border-radius: 5px;
+  color: aliceblue;
+}
+.searchBtn:hover {
+  transform: scale(0.9);
+}
+@media only screen and (max-width: 600px) {
+  .projectsWrap {
+    width: 100%;
+  }
+  .SearchProjects {
+    width: 60%;
+  }
+  .searchBtn {
+    width: 60%;
+  }
+  .profileText {
+    font-size: medium;
+  }
+}

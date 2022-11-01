@@ -1,0 +1,52 @@
+.ServiceWrap {
+  width: 100%;
+  display: flex;
+  margin-left: 0.5%;
+  align-items: center;
+  padding: 1%;
+}
+.service {
+  color: #0d0e52;
+  border-right: lightgray 1px solid;
+  width: 30%;
+  height: 10vh;
+  display: flex;
+  align-items: center;
+  padding-left: 2%;
+}
+.ServiceWrap .service:hover {
+  /* Created with https://www.css-gradient.com */
+  background: #1d19f4;
+  background: -webkit-linear-gradient(top left, #1d19f4, #1b5cc1);
+  background: -moz-linear-gradient(top left, #1d19f4, #1b5cc1);
+  background: linear-gradient(to bottom right, #1d19f4, #1b5cc1);
+  color: #fff;
+  transform: scale(1.1);
+  border-radius: 5px;
+  cursor: pointer;
+}
+.input-box {
+  margin: 5% 0%;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.serviceCheck {
+  margin: 5% 0;
+}
+.newService {
+  display: flex;
+  justify-content: space-between;
+  height: 5%;
+}
+.serviceChoise {
+  display: flex;
+  column-gap: 2%;
+}
+.documentSelect {
+  display: flex;
+  flex-direction: column;
+
+  height: 20vh;
+  justify-content: space-around;
+}

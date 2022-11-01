@@ -1,0 +1,44 @@
+.navBar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2%;
+  background-color: #1a2bc2;
+  color: white;
+  height: 10vh;
+}
+.navItems {
+  width: 60%;
+}
+.navItems ul {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  list-style: none;
+}
+.navItems ul li a {
+  color: white;
+  text-decoration: none;
+}
+.navItems ul li a:link {
+  color: white;
+}
+.navItems ul li a:visited {
+  color: white;
+}
+.logoContainer {
+  width: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.homeLogo {
+  width: 30%;
+  height: 30%;
+}
+.actions {
+  display: flex;
+  justify-content: space-between;
+  width: 20%;
+}

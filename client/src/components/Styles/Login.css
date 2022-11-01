@@ -1,0 +1,47 @@
+
+.loginWrap{
+    display: flex;
+   justify-content: center;
+   align-items: center;
+   height: 100vh;
+}
+
+
+.loginForm{
+margin: auto;
+width: 20%;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+row-gap: 20px;
+
+}
+.formInputs{
+width: 100%;
+display: flex;
+flex-direction: column;
+justify-content: left;;
+row-gap: 20px;
+}
+.logoBmes{
+   
+    width: auto;
+
+    object-fit: fill;
+}
+.formTextItem{
+    border: 1px #1a2bc2 solid;
+    border-radius: 5px;
+    padding: 10px;
+    outline: none;
+}
+.loginBtn{
+    width: 100%;
+    background-color: #1a2bc2;
+    text-decoration: none;
+    border: none;
+    padding: 15px 15px;
+    border-radius: 5px;
+    color: aliceblue;
+}

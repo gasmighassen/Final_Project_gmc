@@ -1,0 +1,68 @@
+.sideBar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  width: 20%;
+  background-color: #0d0e52;
+}
+.logoSideBar {
+  height: auto;
+  width: 100px;
+  margin-left: 1rem;
+}
+.sideBarHeader {
+  background-color: #1a2bc2;
+}
+.SideBarMenu {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin-left: 1rem;
+  list-style: none;
+  color: #fff;
+  height: 100%;
+}
+.SideBarMenuItems {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  column-gap: 10px;
+}
+.SideBarMenuItems:hover {
+  transform: scale(1.1);
+}
+.SideBarFooter {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 20%;
+  color: #fff;
+}
+.SideBarFooter hr {
+  width: 80%;
+  color: #1a2bc2;
+  margin-bottom: 10px;
+}
+.SideBarFooter p {
+  color: #fff;
+}
+.logoutBtn {
+  background-color: #1a2bc2;
+  text-decoration: none;
+  border: none;
+  padding: 5px 5px;
+  border-radius: 5px;
+  color: aliceblue;
+}
+.logoutBtn:hover {
+  background-color: #1a2bc2;
+  text-decoration: none;
+  border: none;
+  padding: 5px 5px;
+  border-radius: 5px;
+  color: aliceblue;
+}
+@media only screen and (max-width: 600px) {
+}

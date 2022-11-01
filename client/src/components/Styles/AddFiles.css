@@ -1,0 +1,30 @@
+.project-path {
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  color: gray;
+}
+.addImage {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  justify-content: space-between;
+  height: 15vh;
+  position: relative;
+}
+.btn-upload {
+  width: 15%;
+  border: none;
+  background-color: #1a2bc2;
+  color: white;
+  margin-top: 2%;
+}
+
+#progress-div {
+  display: flex;
+  position: absolute;
+  top: 60%;
+  left: 21%;
+}

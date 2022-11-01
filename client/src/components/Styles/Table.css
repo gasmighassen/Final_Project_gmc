@@ -1,0 +1,47 @@
+.tableContainer {
+  width: 100%;
+  
+}
+.actionBtn {
+  border: none;
+  background-color: #1a2bc2;
+  padding: 5px 5px;
+  border-radius: 5px;
+  color: aliceblue;
+}
+.actionBtn:hover {
+  transform: scale(0.9);
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 0 auto;
+  border: none;
+}
+th {
+  position: sticky;
+  top: 4px;
+  background-color: #1a2bc2;
+
+  color: #fff;
+}
+th,
+td {
+  text-align: center;
+  padding: 1rem;
+}
+
+tr:nth-child(even) {
+  background-color: #fff;
+}
+@media only screen and (max-width: 600px) {
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 0 auto;
+    border: none;
+  }
+  .mobile-off {
+    display: none;
+  }
+}
