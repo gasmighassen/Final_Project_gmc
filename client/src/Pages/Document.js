@@ -12,9 +12,6 @@ const Document = () => {
     <div className="profileLayout">
       <SideBar />
       <div className="projectsWrap">
-        <div className="paths">
-          <p>profile{window.location.pathname}</p>
-        </div>
         <div className="SearchProjects">
           <h1 className="profileText">Liste des documents</h1>
           <input

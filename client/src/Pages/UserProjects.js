@@ -15,12 +15,6 @@ const UserProjects = () => {
     <div className="profileLayout">
       <SideBar />
       <div className="projectsWrap">
-        <div className="paths">
-          <p className="pathText">
-            <Link to="/">Home</Link>
-            <Link to="/projects">{window.location.pathname}</Link>
-          </p>
-        </div>
         <div className="SearchProjects">
           <h1 className="profileText">Liste des projets</h1>
           <input

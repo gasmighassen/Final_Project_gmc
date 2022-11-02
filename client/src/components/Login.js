@@ -46,7 +46,7 @@ const Login = () => {
               dispatch(userLogin(login));
 
               setTimeout(() => {
-                navigate("/projects");
+                navigate("/");
               }, 1000);
               setTimeout(() => {
                 window.location.reload();

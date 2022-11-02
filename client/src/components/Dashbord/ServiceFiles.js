@@ -7,9 +7,11 @@ import {
 } from "../../redux/slices/serviceSlice";
 import "../Styles/serviceFiles.css";
 import AddFiles from "./AddFiles";
+import Modal from "react-bootstrap/Modal";
 
 const ServiceFiles = ({ service, project, ping, setPing, user }) => {
   const items = useSelector((state) => state.service?.files);
+  const [show, setShow] = useState(false);
   const handleDelete = (item, file) => {
     setPing(!ping);
     dispatch(deleteFile({ service: item?._id, file: file?._id }));
@@ -21,7 +23,8 @@ const ServiceFiles = ({ service, project, ping, setPing, user }) => {
   useEffect(() => {
     dispatch(ProjectFiles(project._id));
   }, [dispatch, ping]);
-
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   return (
     <div className="itemsList">
       <AddFiles
@@ -41,47 +44,57 @@ const ServiceFiles = ({ service, project, ping, setPing, user }) => {
           .map((item, i) => (
             <div className="gallery" key={i.id}>
               <p key={i.id}>{item?.createdAt.split("T")[0]}</p>
-              {item?.files?.map((file, index) => (
-                <>
-                  <img
-                    key={index?.id}
-                    src={file?.url}
-                    alt="Bmes_Pdf_File"
-                    style={{ width: "200px", height: "200px" }}
-                  />
-                  {user?.isAdmin && (
-                    <button
-                      key={index?.id}
-                      onClick={() => {
-                        handleDelete(item, file);
-                      }}
-                    >
-                      remove
-                    </button>
-                  )}
-                </>
-              ))}
+              <div className="galleryContainer">
+                {item?.files?.map((file, index) => (
+                  <div className="galleryItem">
+                    <img key={index?.id} src={file?.url} alt="Bmes_Pdf_File" />
+                    {user?.isAdmin && (
+                      <button
+                        key={index?.id}
+                        onClick={() => {
+                          handleDelete(item, file);
+                        }}
+                      >
+                        remove
+                      </button>
+                    )}
+                  </div>
+                ))}
+              </div>
               <p key={i.id}>{item?.description}</p>
               {!user?.isAdmin ? (
                 <div className="feedContainer">
-                  <h3>votre feedback</h3>
-                  <textarea
-                    type="text"
-                    value={feedback.feedback}
-                    onChange={(e) => {
-                      setfeedback({ ...feedback, feedback: e.target.value });
-                    }}
-                  />
-                  <button
-                    className="login-btn"
-                    onClick={() => {
-                      dispatch(addFeed({ id: item?._id, feed: feedback }));
-                      setfeedback({ ...feedback, feedback: "" });
-                      setPing(!ping);
-                    }}
-                  >
-                    envoyer
+                  <button className="searchBtn" onClick={handleShow}>
+                    Ajout feedback
                   </button>
+                  <Modal show={show} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                      <Modal.Title>votre feedback</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      {" "}
+                      <textarea
+                        type="text"
+                        value={feedback.feedback}
+                        onChange={(e) => {
+                          setfeedback({
+                            ...feedback,
+                            feedback: e.target.value,
+                          });
+                        }}
+                      />
+                      <button
+                        className="searchBtn"
+                        onClick={() => {
+                          dispatch(addFeed({ id: item?._id, feed: feedback }));
+                          setfeedback({ ...feedback, feedback: "" });
+                          setPing(!ping);
+                        }}
+                      >
+                        envoyer
+                      </button>
+                    </Modal.Body>
+                  </Modal>
                 </div>
               ) : null}
             </div>

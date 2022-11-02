@@ -5,7 +5,7 @@ import AddDocument from "./AddDocument";
 import AddNewService from "./AddNewService";
 import AddProject from "./AddProject";
 import SideBarAdmin from "./SideBarAdmin";
-import Button from "react-bootstrap/Button";
+
 import Modal from "react-bootstrap/Modal";
 import "../Styles/ProjectList.css";
 
@@ -46,14 +46,6 @@ const ProjectsList = () => {
 
           {user?.isAdmin ? (
             <div className="actionBar">
-              <button
-                className="searchBtn"
-                onClick={(e) => {
-                  setFilter(text);
-                }}
-              >
-                Rechercher
-              </button>
               <button className="searchBtn" onClick={handleShowAddProject}>
                 Ajout de projet
               </button>

@@ -6,29 +6,22 @@ function TableDocs({ filter, id }) {
   const userDocs = useSelector((state) => state.document?.userDocs);
   useEffect(() => {
     dispatch(docUser(id));
-  }, [dispatch]);
+  }, [dispatch, id]);
   return (
     <div>
       <table className="table">
         <thead>
-          <tr>
-            <td>Document Id</td>
-            <td>Document</td>
-            <td>Created At</td>
-          </tr>
+          <th>{"   "}</th>
+          <th>{`Fichier (${userDocs.length})`}</th>
+          <th>Date creation</th>
         </thead>
         <tbody>
           {userDocs.map((doc, i) => (
             <tr key={i}>
-              <td>{doc._id}</td>
+              <td>{i}</td>
               <td>
                 <a href={doc.docs}>
-                  <img
-                    src="https://e7.pngegg.com/pngimages/182/22/png-clipart-computer-icons-pdf-filename-extension-pdf-icon-angle-text-thumbnail.png"
-                    alt="pdf"
-                    width={"40px"}
-                    height={"40px"}
-                  />
+                  <img className="pdfLogo" src="/img/pdf.png" alt="pdf" />
                 </a>
               </td>
               <td>{doc.createdAt.split("T")[0]}</td>

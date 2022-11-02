@@ -16,7 +16,14 @@ const SideBar = () => {
     <div className="sideBar">
       <div className="sideBarFlex">
         <div className="sideBarHeader">
-          <img src="./img/logo_bmes2.png" alt="" className="logoSideBar" />
+          <img
+            src="./img/logo_bmes2.png"
+            alt="eazeaze"
+            className="logoSideBar"
+            onClick={() => {
+              navigate("/");
+            }}
+          />
         </div>
         <ul className="SideBarMenu">
           <li
