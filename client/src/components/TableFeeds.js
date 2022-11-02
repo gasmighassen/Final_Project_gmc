@@ -13,14 +13,13 @@ function TableFeeds({ filter }) {
     <div>
       <table className="table">
         <thead>
-          <tr>
-            <td></td>
-            <td>Projet</td>
-            <td>service</td>
-            <td>Galery</td>
-            <td>Date creation</td>
-            <td>dernier feedback</td>
-          </tr>
+          <th></th>
+          <th className="mobile-off">Projet</th>
+          <th className="mobile-off">Services</th>
+          <th className="mobile-off">Fichier</th>
+          <th className="mobile-off">Date de creation</th>
+
+          <th className="mobile-off">Dernier feedback</th>
         </thead>
         <tbody>
           {allfeeds
@@ -33,7 +32,12 @@ function TableFeeds({ filter }) {
                 <td>
                   {feeds?.files
                     ?.map((el) => (
-                      <img src={el.url} width={"50px"} height={"50px"} />
+                      <img
+                        className="galleryItem"
+                        src={el.url}
+                        width={"50px"}
+                        height={"50px"}
+                      />
                     ))
                     .slice(-1)}
                 </td>
