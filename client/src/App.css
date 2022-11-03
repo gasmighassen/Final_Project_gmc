@@ -10,6 +10,7 @@
 }
 .projectsWrap {
   margin: 2%;
+  min-height: 100vh;
 }
 .required {
   color: red;

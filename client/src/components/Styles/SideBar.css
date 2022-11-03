@@ -7,9 +7,10 @@
   background-color: #0d0e52;
 }
 .logoSideBar {
-  height: auto;
-  width: 100px;
-  margin-left: 1rem;
+  height: 30%;
+  width: 30%;
+  margin-left: 5rem;
+  cursor: pointer;
 }
 .sideBarHeader {
   background-color: #1a2bc2;

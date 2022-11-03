@@ -12,6 +12,7 @@
   width: 50%;
   justify-content: space-between;
   height: 15vh;
+  margin-bottom: 3rem;
   position: relative;
 }
 .btn-upload {
@@ -25,6 +26,6 @@
 #progress-div {
   display: flex;
   position: absolute;
-  top: 60%;
-  left: 21%;
+  top: 41%;
+  left: 25%;
 }
