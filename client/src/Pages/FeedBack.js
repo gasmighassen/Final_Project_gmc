@@ -14,7 +14,7 @@ function FeedBack() {
 
       <div className="projectsWrap">
         <div className="SearchProjects">
-          <h1 className="profileText">Liste des documents</h1>
+          <h1 className="profileText">Liste des Feedback</h1>
           <input
             type="text"
             placeholder="Vous cherchez quel projet..."

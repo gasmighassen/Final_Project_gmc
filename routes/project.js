@@ -3,12 +3,12 @@ const router = express.Router();
 
 const Project = require("../models/project");
 const Services = require("../models/services");
-
+const { ProjectRules, validation } = require("../middelwares/validator");
 // POST
 
 // save new project
 
-router.post("/addproject", async (req, res) => {
+router.post("/addproject", ProjectRules(), async (req, res) => {
   const { projectName, id_user, infoProject, services } = req.body;
   try {
     const searchedProject = await Project.findOne({ projectName });

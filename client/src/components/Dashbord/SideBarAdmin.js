@@ -8,7 +8,7 @@ import { MdOutlineFeedback } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../../redux/slices/userSlice";
 
-const SideBarAdmin = () => {
+const SideBarAdmin = ({ logo = "./img/logo.png" }) => {
   const user = useSelector((state) => state.user?.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -17,7 +17,7 @@ const SideBarAdmin = () => {
       <div className="sideBarFlex">
         <div className="sideBarHeader">
           <img
-            src="./img/logo_bmes2.png"
+            src={logo}
             alt=""
             className="logoSideBar"
             onClick={() => {

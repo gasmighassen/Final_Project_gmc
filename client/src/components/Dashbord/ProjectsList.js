@@ -1,22 +1,41 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import AddDocument from "./AddDocument";
 import AddNewService from "./AddNewService";
 import AddProject from "./AddProject";
 import SideBarAdmin from "./SideBarAdmin";
 
-import Modal from "react-bootstrap/Modal";
+import { Modal, Button } from "react-bootstrap";
 import "../Styles/ProjectList.css";
+import { allProjects, deleteProjects } from "../../redux/slices/projectSlice";
 
 const ProjectsList = () => {
   const user = useSelector((state) => state.user?.user);
+  const dispatch = useDispatch();
   const [text, setText] = useState("");
   const [filter, setFilter] = useState("");
+  const [deletedId, setDeletedId] = useState({
+    id: "",
+    projet: "",
+  });
   const projects = useSelector((state) => state.project?.projects);
+  const [ping, setPing] = useState(false);
+
+  const handleDeleteProject = (deletedId) => {
+    dispatch(deleteProjects(deletedId.id));
+    setTimeout(() => {
+      dispatch(allProjects());
+    }, 1000);
+    setPing(!ping);
+    handleCloseDelete();
+  };
+  const [showDelete, setShowDelete] = useState(false);
   const [showP, setShowP] = useState(false);
   const [showS, setShowS] = useState(false);
   const [showD, setShowD] = useState(false);
+  const handleCloseDelete = () => setShowDelete(false);
+  const handleShowDelete = () => setShowDelete(true);
   const handleCloseAddProject = () => setShowP(false);
   const handleShowAddProject = () => setShowP(true);
   const handleCloseAddService = () => setShowS(false);
@@ -62,6 +81,29 @@ const ProjectsList = () => {
             {user?.isAdmin ? (
               <>
                 {" "}
+                <Modal show={showDelete} onHide={handleCloseDelete}>
+                  <Modal.Header closeButton>
+                    <Modal.Title>{deletedId.projet}</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    {" "}
+                    <h2>Voulez vous supprimer ce projet ?</h2>
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button
+                      onClick={() => handleDeleteProject(deletedId)}
+                      className="btn-danger btn"
+                    >
+                      Ok
+                    </Button>
+                    <Button
+                      onClick={() => handleCloseDelete()}
+                      className="primary "
+                    >
+                      Annuler
+                    </Button>
+                  </Modal.Footer>
+                </Modal>
                 <Modal show={showP} onHide={handleCloseAddProject}>
                   <Modal.Header closeButton>
                     <Modal.Title>Ajout de projet</Modal.Title>
@@ -126,6 +168,19 @@ const ProjectsList = () => {
                       <Link to="/projetprofil" state={project}>
                         <button className="actionBtn">Voir</button>
                       </Link>
+                      <button
+                        onClick={() => {
+                          handleShowDelete();
+                          setDeletedId({
+                            ...deletedId,
+                            id: project._id,
+                            projet: project.projectName,
+                          });
+                        }}
+                        className="btn-danger btn ml-6"
+                      >
+                        Supprimer
+                      </button>
                     </td>
                   </tr>
                 ))}
