@@ -12,7 +12,7 @@ const UsersList = () => {
       <SideBarAdmin />
       <div className="projectsWrap">
         <div className="SearchProjects">
-          <h1 className="profileText">Liste des projets</h1>
+          <h1 className="profileText">Liste des clients</h1>
           <input
             type="text"
             placeholder="Vous cherchez quel projet..."

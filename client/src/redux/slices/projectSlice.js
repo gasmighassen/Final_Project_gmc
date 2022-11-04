@@ -39,6 +39,20 @@ export const getUserProjects = createAsyncThunk(
   }
 );
 
+export const deleteProjects = createAsyncThunk(
+  "/project/deletepro/:id",
+  async (id) => {
+    try {
+      let result = await axios.delete(
+        `http://localhost:5000/project/deletepro/${id}`
+      );
+      return result.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
 //update project with new service
 export const addServiceToProject = createAsyncThunk(
   "/project/project/:id",
@@ -94,6 +108,15 @@ export const projectSlice = createSlice({
     [getUserProjects.fulfilled]: (state, action) => {
       state.status = "success";
       state.userProjects = action.payload?.result;
+    },
+    [deleteProjects.pending]: (state) => {
+      state.status = "pending";
+    },
+    [deleteProjects.rejected]: (state) => {
+      state.status = "fail";
+    },
+    [deleteProjects.fulfilled]: (state) => {
+      state.status = "success";
     },
   },
 });
