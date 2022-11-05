@@ -74,6 +74,7 @@ const initialState = {
   projects: [],
   userProjects: [],
   status: "",
+  isLoading: false,
 };
 export const projectSlice = createSlice({
   name: "project",
@@ -82,41 +83,53 @@ export const projectSlice = createSlice({
   extraReducers: {
     [addProject.pending]: (state) => {
       state.status = "pending";
+      state.isLoading = true;
     },
     [addProject.fulfilled]: (state) => {
       state.status = "fulfilled";
+      state.isLoading = false;
     },
     [addProject.failed]: (state) => {
       state.status = "failed";
+      state.isLoading = false;
     },
     [allProjects.pending]: (state) => {
       state.status = "pending";
+      state.isLoading = true;
     },
     [allProjects.fulfilled]: (state, action) => {
       state.status = "success";
       state.projects = action.payload?.data.projects;
+      state.isLoading = false;
     },
     [allProjects.rejected]: (state) => {
       state.status = "fail";
+      state.isLoading = false;
     },
     [getUserProjects.pending]: (state) => {
       state.status = "pending";
+      state.isLoading = true;
     },
     [getUserProjects.rejected]: (state) => {
       state.status = "fail";
+      state.isLoading = false;
     },
     [getUserProjects.fulfilled]: (state, action) => {
       state.status = "success";
       state.userProjects = action.payload?.result;
+      state.isLoading = false;
     },
     [deleteProjects.pending]: (state) => {
       state.status = "pending";
+      state.isLoading = true;
     },
     [deleteProjects.rejected]: (state) => {
       state.status = "fail";
+      state.isLoading = false;
     },
     [deleteProjects.fulfilled]: (state) => {
       state.status = "success";
+      state.isLoading = false;
     },
   },
 });

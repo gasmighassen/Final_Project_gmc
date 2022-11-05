@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { docUser } from "../redux/slices/documentSlice";
 function TableDocs({ filter, id }) {
@@ -22,6 +22,7 @@ function TableDocs({ filter, id }) {
               <td>
                 <a href={doc.docs}>
                   <img className="pdfLogo" src="/img/pdf.png" alt="pdf" />
+                  <p>{doc.titre}</p>
                 </a>
               </td>
               <td>{doc.createdAt.split("T")[0]}</td>

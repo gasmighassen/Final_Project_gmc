@@ -8,13 +8,16 @@ import "./Styles/Table.css";
 const TableProjects = ({ filter, user }) => {
   const dispatch = useDispatch();
   const userProjects = useSelector((state) => state.project?.userProjects);
-
+  const { isLoading } = useSelector((state) => state.project);
+  console.log(isLoading);
   useEffect(() => {
     dispatch(getUserProjects(user));
   }, [dispatch]);
   return (
     <div>
-      {userProjects != [] ? (
+      {isLoading ? (
+        <Loader />
+      ) : (
         <>
           {userProjects.length === 0 ? (
             <p>pas des projets pour le moment</p>
@@ -63,8 +66,6 @@ const TableProjects = ({ filter, user }) => {
             </table>
           )}
         </>
-      ) : (
-        <Loader />
       )}
     </div>
   );

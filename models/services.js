@@ -7,7 +7,7 @@ const ServiceSchema = new schema(
     id_project: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Project",
-      required: false,
+      required: true,
     },
   },
   { timestamps: true }

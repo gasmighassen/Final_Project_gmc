@@ -6,19 +6,28 @@ import "../Styles/Register.css";
 import SideBarAdmin from "./SideBarAdmin";
 
 const Register = () => {
+  const dispatch = useDispatch();
+  const [ping, setPing] = useState(false);
   const [user, setuser] = useState({
     name: "",
     lastName: "",
     email: "",
     password: "",
-    phone: 0,
+    phone: Number,
     isAdmin: false,
   });
-  const users = useSelector((state) => state.user?.users);
+
   useEffect(() => {
-    setuser({ ...users, _id: users?._id });
-  }, [users]);
-  const dispatch = useDispatch();
+    setuser({
+      ...user,
+      name: "",
+      lastName: "",
+      email: "",
+      password: "",
+      phone: Number,
+      isAdmin: false,
+    });
+  }, [ping]);
 
   return (
     <div className="profileLayout">
@@ -33,6 +42,7 @@ const Register = () => {
                 <input
                   type="text"
                   placeholder="Enter your name"
+                  value={user.name}
                   required=""
                   onChange={(e) => setuser({ ...user, name: e.target.value })}
                 />
@@ -42,6 +52,7 @@ const Register = () => {
                 <input
                   type="text"
                   placeholder="Enter your username"
+                  value={user.lastName}
                   required=""
                   onChange={(e) =>
                     setuser({ ...user, lastName: e.target.value })
@@ -52,6 +63,7 @@ const Register = () => {
                 <span className="details">Email</span>
                 <input
                   type="text"
+                  value={user.email}
                   placeholder="Enter your email"
                   required=""
                   onChange={(e) => setuser({ ...user, email: e.target.value })}
@@ -61,7 +73,8 @@ const Register = () => {
                 <span className="details">Phone Number</span>
                 <input
                   type="text"
-                  placeholder="Enter your number"
+                  value={user.phone}
+                  placeholder="+216-000-000"
                   required=""
                   onChange={(e) => setuser({ ...user, phone: e.target.value })}
                 />
@@ -69,8 +82,9 @@ const Register = () => {
               <div className="input-box">
                 <span className="details">Password</span>
                 <input
-                  type="text"
+                  type="password"
                   placeholder="Enter your password"
+                  value={user.password}
                   required=""
                   onChange={(e) =>
                     setuser({ ...user, password: e.target.value })
@@ -96,6 +110,7 @@ const Register = () => {
               defaultValue="Register"
               onClick={() => {
                 dispatch(userRegister(user));
+                setPing(!ping);
               }}
             />
           </div>

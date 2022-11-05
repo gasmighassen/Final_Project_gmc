@@ -7,18 +7,18 @@ const ProjectSchema = new schema(
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Services",
-        required: false,
+        required: true,
       },
     ],
 
     id_user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: false,
+      required: true,
     },
     infoProject: {
       type: String,
-      required: false,
+      required: true,
     },
     projectName: {
       type: String,
