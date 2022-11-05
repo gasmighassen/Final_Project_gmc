@@ -4,6 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { userCurrent, logout } from "../redux/slices/userSlice";
 import "./Styles/Navbar.css";
+import { CgProfile } from "react-icons/cg";
+import { AiOutlineLogout } from "react-icons/ai";
+import { BsTools } from "react-icons/bs";
+
+import { GrUserAdmin } from "react-icons/gr";
+import logo from "../assets/logo.png";
 
 const NavBar = () => {
   const user = useSelector((state) => state.user.user);
@@ -19,7 +25,7 @@ const NavBar = () => {
   return (
     <div className="navBar">
       <div className="logoContainer">
-        <img className="homeLogo" src="./img/logo_bmes2.png" alt="logo" />
+        <img className="homeLogo" src={logo} alt="logo" />
       </div>
 
       <div className="navItems">
@@ -38,33 +44,31 @@ const NavBar = () => {
       <div className="actions">
         {isAuth ? (
           <>
-            <button
+            <CgProfile
               onClick={() => {
                 navigate("/projects");
               }}
               className="signn"
-            >
-              Profil
-            </button>
-            <button
+              
+          /  >
+         
+            <AiOutlineLogout
               onClick={() => {
                 dispatch(logout());
                 navigate("/");
               }}
-              className="log-drop"
-            >
-              Logout
-            </button>
+              className="signn"
+           / >
+         
 
             {user?.isAdmin ? (
-              <button
+              <BsTools
                 onClick={() => {
                   navigate("/dashbord");
                 }}
-                className="log-drop"
-              >
-                Dashboard
-              </button>
+                className="signn"
+              />
+           
             ) : null}
           </>
         ) : (

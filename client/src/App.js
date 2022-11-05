@@ -22,6 +22,7 @@ import Register from "./components/Dashbord/Register";
 import { allServices } from "./redux/slices/serviceSlice";
 import ProjectProfile from "./components/Dashbord/ProjectProfile";
 import FeedBack from "./Pages/FeedBack";
+import Service from "./components/Service";
 
 function App() {
   const dispatch = useDispatch();
@@ -52,7 +53,7 @@ function App() {
    */}
       <Routes>
         <Route path="/" element={<Main />} />
-
+        <Route path="/services" element={<Service />} />
         <Route path="/login" element={<Login />} />
 
         <Route element={<PrivateRoute />}>
