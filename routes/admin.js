@@ -36,16 +36,7 @@ router.post("/register", registerRules(), validation, async (req, res) => {
 
     //save the user
     const newUserToken = await newUser.save();
-    const payload = {
-      _id: newUserToken._id,
-      name: newUserToken.name,
-    };
-    const token = await jwt.sign(payload, process.env.SecretOrKey, {
-      expiresIn: 100000,
-    });
-    res
-      .status(200)
-      .send({ newUserToken, msg: "user saved..", token: `Bearer ${token}` });
+    res.send({ result: newUserToken, msg: "user added" });
   } catch (error) {
     res.status(500).send(" can not save the user...");
     console.log(error);

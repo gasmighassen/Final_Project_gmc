@@ -6,9 +6,9 @@ const Document = require("../models/Document");
 
 // add document to user
 router.post("/adddoc", async (req, res) => {
-  const { docs, id_user } = req.body;
+  const { docs, id_user, titre } = req.body;
   try {
-    const newDoc = new Document({ docs, id_user });
+    const newDoc = new Document({ docs, id_user, titre });
     let result = await newDoc.save();
     res.send({ result: result, msg: "document added" });
   } catch (error) {

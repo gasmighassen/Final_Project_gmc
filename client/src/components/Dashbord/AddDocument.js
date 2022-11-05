@@ -12,10 +12,11 @@ function AddDocument({ setShowD }) {
   const [file, setfile] = useState({
     id_user: "",
     docs: "",
+    titre: "",
   });
   useEffect(() => {
     setfile({ ...file, id_user: user?._id });
-  }, []);
+  }, [file, user]);
   const uploadImage = async () => {
     const form = new FormData();
     form.append("upload_preset", "bmes_file");
@@ -54,6 +55,13 @@ function AddDocument({ setShowD }) {
               name="image"
               accept="application/pdf,application/vnd.ms-excel"
               onChange={(e) => setupload(e.target.files[0])}
+            />
+            <h2>Titre de document...</h2>
+            <input
+              type="text"
+              name="titre"
+              value={file.titre}
+              onChange={(e) => setfile({ ...file, titre: e.target.value })}
             />
             <input
               className="loginBtn"

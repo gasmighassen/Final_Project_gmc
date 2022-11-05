@@ -33,7 +33,7 @@ export const docUser = createAsyncThunk("document/userdocs", async (id) => {
 const initialState = {
   docs: [],
   userDocs: [],
-
+  isLoading: false,
   status: "",
 };
 export const documentSlice = createSlice({
@@ -43,32 +43,41 @@ export const documentSlice = createSlice({
   extraReducers: {
     [addDoc.pending]: (state) => {
       state.status = "pending";
+      state.isLoading = true;
     },
     [addDoc.fulfilled]: (state) => {
       state.status = "fulfilled";
+      state.isLoading = false;
     },
     [addDoc.failed]: (state) => {
       state.status = "failed";
+      state.isLoading = false;
     },
     [allDocs.pending]: (state) => {
       state.status = "pending";
+      state.isLoading = true;
     },
     [allDocs.fulfilled]: (state, action) => {
       state.status = "success";
       state.docs = action.payload?.data.document;
+      state.isLoading = false;
     },
     [allDocs.rejected]: (state) => {
       state.status = "fail";
+      state.isLoading = false;
     },
     [docUser.pending]: (state) => {
       state.status = "pending";
+      state.isLoading = true;
     },
     [docUser.fulfilled]: (state, action) => {
       state.status = "success";
       state.userDocs = action.payload?.documentUser;
+      state.isLoading = false;
     },
     [docUser.rejected]: (state) => {
       state.status = "fail";
+      state.isLoading = false;
     },
   },
 });

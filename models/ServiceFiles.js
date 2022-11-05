@@ -6,18 +6,19 @@ const ServiceFilesSchema = new schema(
     services: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Services",
-      required: false,
+      required: true,
     },
 
     id_project: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Project",
-      required: false,
+      required: true,
     },
-    files: [{ url: String }],
-    feedback: [String],
+    files: [{ url: { type: String, required: true } }],
+    feedback: [{ type: String, required: true }],
     description: {
       type: String,
+      required: true,
     },
   },
   { timestamps: true }

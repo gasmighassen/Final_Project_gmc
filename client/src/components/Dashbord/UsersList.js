@@ -1,12 +1,30 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import SideBarAdmin from "./SideBarAdmin";
-
+import { Modal, Button } from "react-bootstrap";
+import { usersDel, usersGet } from "../../redux/slices/userSlice";
 const UsersList = () => {
+  const dispatch = useDispatch();
   const [text, setText] = useState("");
   const [filter, setFilter] = useState("");
+  const [deletedId, setDeletedId] = useState({
+    id: "",
+    user: "",
+  });
+  const [ping, setPing] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
+  const handleCloseDelete = () => setShowDelete(false);
+  const handleShowDelete = () => setShowDelete(true);
   const users = useSelector((state) => state.user?.users);
+  const handleDeleteProject = (deletedId) => {
+    dispatch(usersDel(deletedId.id));
+    setTimeout(() => {
+      dispatch(usersGet());
+    }, 1000);
+    setPing(!ping);
+    handleCloseDelete();
+  };
   return (
     <div className="profileLayout">
       <SideBarAdmin />
@@ -28,6 +46,29 @@ const UsersList = () => {
             Rechercher
           </button>
           <div className="tableContainer">
+            <Modal show={showDelete} onHide={handleCloseDelete}>
+              <Modal.Header closeButton>
+                <Modal.Title>{deletedId.user}</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                {" "}
+                <h2>Voulez vous supprimer ce client ?</h2>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button
+                  onClick={() => handleDeleteProject(deletedId)}
+                  className="btn-danger btn"
+                >
+                  Ok
+                </Button>
+                <Button
+                  onClick={() => handleCloseDelete()}
+                  className="primary "
+                >
+                  Annuler
+                </Button>
+              </Modal.Footer>
+            </Modal>
             <table>
               <th className="mobile-off">Nom & prenom</th>
               <th className="mobile-off">Email</th>
@@ -50,7 +91,20 @@ const UsersList = () => {
 
                     <td className="mobile-off">{user.phone}</td>
                     <td>
-                      <button className="actionBtn">Voir</button>
+                      <button className="btn btn-success">Edit</button>
+                      <button
+                        onClick={() => {
+                          handleShowDelete();
+                          setDeletedId({
+                            ...deletedId,
+                            id: user._id,
+                            user: user.name,
+                          });
+                        }}
+                        className="btn-danger btn ml-6"
+                      >
+                        Supprimer
+                      </button>
                     </td>
                   </tr>
                 ))}

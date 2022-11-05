@@ -56,9 +56,9 @@ export const usersGet = createAsyncThunk("admin/get", async () => {
     console.log(error);
   }
 });
-export const usersDel = createAsyncThunk("user/delete", async (id) => {
+export const usersDel = createAsyncThunk("/deleteuser/:id", async (id) => {
   try {
-    let result = axios.delete(`http://localhost:5000/user/${id}`);
+    let result = axios.delete(`http://localhost:5000/admin//deleteuser/${id}`);
     return result.data;
   } catch (error) {
     console.log(error);
@@ -71,6 +71,7 @@ const initialState = {
   status: null,
   newuserupdated: {},
   userUpdated: null,
+  isLoading: false,
 };
 
 export const userSlice = createSlice({
@@ -85,65 +86,79 @@ export const userSlice = createSlice({
   extraReducers: {
     [userRegister.pending]: (state) => {
       state.status = "pending";
+      state.isLoading = true;
     },
     [userRegister.fulfilled]: (state, action) => {
       state.status = "success";
-      state.user = action.payload.data?.newUserToken;
-      localStorage.setItem("token", action.payload.token);
+      state.isLoading = false;
+      /* state.user = action.payload.data?.newUserToken; */
     },
     [userRegister.rejected]: (state) => {
       state.status = "fail";
+      state.isLoading = false;
     },
     [userLogin.pending]: (state) => {
       state.status = "pending";
+      state.isLoading = true;
     },
     [userLogin.fulfilled]: (state, action) => {
       state.status = "success";
+      state.isLoading = false;
       state.user = action.payload.user;
       localStorage.setItem("token", action.payload.token);
     },
     [userLogin.rejected]: (state) => {
       state.status = "fail";
+      state.isLoading = false;
     },
     [userCurrent.pending]: (state) => {
       state.status = "pending";
     },
     [userCurrent.fulfilled]: (state, action) => {
       state.status = "success";
-      state.user = action.payload.data?.user;
+      state.user = action.payload?.data?.user;
     },
     [userCurrent.rejected]: (state) => {
       state.status = "fail";
     },
     [updateUser.pending]: (state) => {
       state.status = "pending";
+      state.isLoading = true;
     },
     [updateUser.fulfilled]: (state, action) => {
       state.userUpdated = action.payload.msg;
       state.newuserupdated = action.payload.newProfile;
       state.status = "success";
+      state.isLoading = false;
     },
     [updateUser.rejected]: (state) => {
       state.status = "fail";
+      state.isLoading = false;
     },
     [usersGet.pending]: (state) => {
       state.status = "pending";
+      state.isLoading = true;
     },
     [usersGet.fulfilled]: (state, action) => {
       state.status = "success";
       state.users = action.payload.data?.users;
+      state.isLoading = false;
     },
     [usersGet.rejected]: (state) => {
       state.status = "fail";
+      state.isLoading = false;
     },
     [usersDel.pending]: (state) => {
       state.status = "pending";
+      state.isLoading = true;
     },
     [usersDel.fulfilled]: (state) => {
       state.status = "success";
+      state.isLoading = false;
     },
     [usersDel.rejected]: (state) => {
       state.status = "fail";
+      state.isLoading = false;
     },
   },
 });

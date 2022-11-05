@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import "../components/Styles/UserProjects.css";
 import SideBar from "../components/SideBar";
 import TableProjects from "../components/TableProjects";
-import Logo from "../assets/logo.png"
-import { Link } from "react-router-dom";
+import Logo from "../assets/logo.png";
+
 import { useSelector } from "react-redux";
 
 const UserProjects = () => {
@@ -13,7 +13,7 @@ const UserProjects = () => {
   const [filter, setFilter] = useState("");
   return (
     <div className="profileLayout">
-      <SideBar logo={Logo}/>
+      <SideBar logo={Logo} />
       <div className="projectsWrap">
         <div className="SearchProjects">
           <h1 className="profileText">Liste des projets</h1>

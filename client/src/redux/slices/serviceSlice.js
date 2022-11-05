@@ -126,6 +126,7 @@ const initialState = {
   files: [],
   feeds: [],
   status: "",
+  isLoading: false,
 };
 export const serviceSlice = createSlice({
   name: "service",
@@ -134,88 +135,115 @@ export const serviceSlice = createSlice({
   extraReducers: {
     [ProjectFiles.pending]: (state) => {
       state.status = "pending";
+      state.isLoading = true;
     },
     [ProjectFiles.fulfilled]: (state, action) => {
       state.status = "fulfilled";
       state.files = action.payload?.data?.files;
+      state.isLoading = false;
     },
     [ProjectFiles.failed]: (state) => {
       state.status = "failed";
+      state.isLoading = false;
     },
     [allFeeds.pending]: (state) => {
       state.status = "pending";
+      state.isLoading = true;
     },
     [allFeeds.fulfilled]: (state, action) => {
       state.status = "fulfilled";
       state.feeds = action.payload?.data?.allfeeds;
+      state.isLoading = false;
     },
     [allFeeds.failed]: (state) => {
       state.status = "failed";
+      state.isLoading = false;
     },
     [addServiceFile.pending]: (state) => {
       state.status = "pending";
+      state.isLoading = true;
     },
     [addServiceFile.fulfilled]: (state) => {
       state.status = "fulfilled";
+      state.isLoading = false;
     },
     [addServiceFile.failed]: (state) => {
       state.status = "failed";
+      state.isLoading = false;
     },
     [addFile.pending]: (state) => {
       state.status = "pending";
+      state.isLoading = true;
     },
     [addFile.fulfilled]: (state) => {
       state.status = "fulfilled";
+      state.isLoading = false;
     },
     [addFile.failed]: (state) => {
       state.status = "failed";
+      state.isLoading = false;
     },
     [addService.pending]: (state) => {
       state.status = "pending";
+      state.isLoading = true;
     },
     [addService.fulfilled]: (state) => {
       state.status = "fulfilled";
+      state.isLoading = false;
     },
     [addService.failed]: (state) => {
       state.status = "failed";
+      state.isLoading = false;
     },
     [allServices.pending]: (state) => {
       state.status = "pending";
+      state.isLoading = true;
     },
     [allServices.fulfilled]: (state, action) => {
       state.status = "success";
       state.services = action.payload?.data.services;
+      state.isLoading = false;
     },
     [allServices.rejected]: (state) => {
       state.status = "fail";
+      state.isLoading = false;
     },
     [delService.pending]: (state) => {
       state.status = "pending";
+      state.isLoading = true;
     },
     [delService.rejected]: (state) => {
       state.status = "fail";
+      state.isLoading = false;
     },
     [delService.fulfilled]: (state, action) => {
       state.status = "success";
       state.services = action.payload?.services;
+      state.isLoading = false;
     },
     [deleteFile.pending]: (state) => {
       state.status = "pending";
+      state.isLoading = true;
     },
     [deleteFile.rejected]: (state) => {
       state.status = "fail";
+      state.isLoading = false;
     },
     [deleteFile.fulfilled]: (state, action) => {
       state.status = "success";
+      state.isLoading = false;
     },
     [addFeed.pending]: (state) => {
       state.status = "pending";
+      state.isLoading = true;
     },
     [addFeed.rejected]: (state) => {
       state.status = "fail";
+      state.isLoading = false;
     },
     [addFeed.fulfilled]: (state, action) => {
       state.status = "success";
+      state.isLoading = false;
       // state.files = action.payload?.result;
     },
   },
