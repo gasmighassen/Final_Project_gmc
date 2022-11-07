@@ -53,7 +53,7 @@ function App() {
    */}
       <Routes>
         <Route path="/" element={<Main />} />
-        <Route path="/services" element={<Service />} />
+
         <Route path="/login" element={<Login />} />
 
         <Route element={<PrivateRoute />}>

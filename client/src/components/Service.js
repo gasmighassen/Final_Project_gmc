@@ -10,9 +10,7 @@ import NavBar from "./NavBar";
 const Service = () => {
   return (
     <>
-      <img src={circles} className="ts" alt="" />
-      <NavBar />
-      <div className="n-service">
+      <div className="n-service" id="services">
         <h1 className="title">Nos Services</h1>
         <div className="line"></div>
         <p className="parag">

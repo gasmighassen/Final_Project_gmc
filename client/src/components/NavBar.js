@@ -31,13 +31,13 @@ const NavBar = () => {
       <div className="navItems">
         <ul>
           <li>
-            <Link to="/">Home</Link>
+            <a href="#home">Home</a>
           </li>
           <li>
-            <Link to="/services">Services</Link>
+            <a href="#services">Services</a>
           </li>
           <li>
-            <Link to="/about">About</Link>
+            <a href="#about">About</a>
           </li>
         </ul>
       </div>
@@ -49,17 +49,15 @@ const NavBar = () => {
                 navigate("/projects");
               }}
               className="signn"
-              
-          /  >
-         
+            />
+
             <AiOutlineLogout
               onClick={() => {
                 dispatch(logout());
                 navigate("/");
               }}
               className="signn"
-           / >
-         
+            />
 
             {user?.isAdmin ? (
               <BsTools
@@ -68,7 +66,6 @@ const NavBar = () => {
                 }}
                 className="signn"
               />
-           
             ) : null}
           </>
         ) : (

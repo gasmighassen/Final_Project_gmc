@@ -13,6 +13,7 @@ import Loader from "../Loader";
 const ServiceFiles = ({ service, project, ping, setPing, user }) => {
   const dispatch = useDispatch();
   const items = useSelector((state) => state.service?.files);
+
   const { isLoading } = useSelector((state) => state.service);
   const [show, setShow] = useState(false);
   const handleDelete = (item, file) => {
@@ -28,6 +29,7 @@ const ServiceFiles = ({ service, project, ping, setPing, user }) => {
   useEffect(() => {}, [dispatch, show]);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
   return (
     <>
       <AddFiles
@@ -75,6 +77,32 @@ const ServiceFiles = ({ service, project, ping, setPing, user }) => {
                     </a>
                   </div>
                 ))}
+                {!user?.isAdmin && (
+                  <div className="sendFeed">
+                    <input
+                      type="text"
+                      value={feedback.feedback}
+                      onChange={(e) =>
+                        setfeedback({
+                          ...feedback,
+                          feedback: e.target.value,
+                        })
+                      }
+                    />
+                    <button
+                      onClick={() => {
+                        dispatch(
+                          addFeed({
+                            id: item?.id,
+                            feed: feedback.feedback,
+                          })
+                        );
+                      }}
+                    >
+                      Envoyer
+                    </button>
+                  </div>
+                )}
               </>
             ))}
         </div>
