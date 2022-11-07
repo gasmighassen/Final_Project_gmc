@@ -5,10 +5,13 @@ import AddDocument from "./AddDocument";
 import AddNewService from "./AddNewService";
 import AddProject from "./AddProject";
 import SideBarAdmin from "./SideBarAdmin";
-
+import { AiOutlineEye } from "react-icons/ai";
+import { RiDeleteBin5Line } from "react-icons/ri";
 import { Modal, Button } from "react-bootstrap";
 import "../Styles/ProjectList.css";
 import { allProjects, deleteProjects } from "../../redux/slices/projectSlice";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 const ProjectsList = () => {
   const user = useSelector((state) => state.user?.user);
@@ -46,36 +49,38 @@ const ProjectsList = () => {
     <div className="profileLayout">
       <SideBarAdmin />
       <div className="projectsWrap">
+        {user?.isAdmin ? (
+          <div className="actionBar">
+            <button className="actionBtn" onClick={handleShowAddProject}>
+              Ajout de projet
+            </button>
+            <button className="actionBtn" onClick={handleShowAddService}>
+              Ajout Service
+            </button>
+            <button className="actionBtn" onClick={handleShowAddDoc}>
+              Ajout Document
+            </button>
+          </div>
+        ) : null}
         <div className="SearchProjects">
           <h1 className="profileText">Liste des projets</h1>
-          <input
-            type="text"
-            placeholder="Vous cherchez quel projet..."
-            className="search"
-            onChange={(e) => setText(e.target.value)}
-          />
-          <button
-            className="searchBtn"
-            onClick={(e) => {
-              setFilter(text);
-            }}
-          >
-            Rechercher
-          </button>
+          <div className="searchP">
+            <input
+              type="text"
+              placeholder="Vous cherchez quel projet..."
+              className="search"
+              onChange={(e) => setText(e.target.value)}
+            />
 
-          {user?.isAdmin ? (
-            <div className="actionBar">
-              <button className="searchBtn" onClick={handleShowAddProject}>
-                Ajout de projet
-              </button>
-              <button className="searchBtn" onClick={handleShowAddService}>
-                Ajout Service
-              </button>
-              <button className="searchBtn" onClick={handleShowAddDoc}>
-                Ajout Document
-              </button>
-            </div>
-          ) : null}
+            <i>
+              <FontAwesomeIcon
+                icon={faSearch}
+                onClick={(e) => {
+                  setFilter(text);
+                }}
+              />
+            </i>
+          </div>
 
           <div className="tableContainer">
             {user?.isAdmin ? (
@@ -166,9 +171,9 @@ const ProjectsList = () => {
                     </td>
                     <td>
                       <Link to="/projetprofil" state={project}>
-                        <button className="actionBtn">Voir</button>
+                        <AiOutlineEye className="tableActionBtn" />
                       </Link>
-                      <button
+                      <RiDeleteBin5Line
                         onClick={() => {
                           handleShowDelete();
                           setDeletedId({
@@ -177,10 +182,8 @@ const ProjectsList = () => {
                             projet: project.projectName,
                           });
                         }}
-                        className="btn-danger btn ml-6"
-                      >
-                        Supprimer
-                      </button>
+                        className="tableActionBtn required"
+                      />
                     </td>
                   </tr>
                 ))}

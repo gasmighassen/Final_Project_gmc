@@ -3,7 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import SideBar from "../components/SideBar";
 import TableDocs from "../components/TableDocs";
 import { useParams } from "react-router-dom";
-import Logo from "../assets/logo.png"
+import Logo from "../assets/logo.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 const Document = () => {
   const user = useSelector((state) => state.user?.user);
@@ -12,24 +14,27 @@ const Document = () => {
   const [filter, setFilter] = useState("");
   return (
     <div className="profileLayout">
-      <SideBar logo={Logo}/>
+      <SideBar logo={Logo} />
       <div className="projectsWrap">
         <div className="SearchProjects">
           <h1 className="profileText">Liste des documents</h1>
-          <input
-            type="text"
-            placeholder="Vous cherchez quel projet..."
-            className="search"
-            onChange={(e) => setText(e.target.value)}
-          />
-          <button
-            className="searchBtn"
-            onClick={(e) => {
-              setFilter(text);
-            }}
-          >
-            Rechercher
-          </button>
+          <div className="searchP">
+            <input
+              type="text"
+              placeholder="Vous cherchez quel projet..."
+              className="search"
+              onChange={(e) => setText(e.target.value)}
+            />
+
+            <i>
+              <FontAwesomeIcon
+                icon={faSearch}
+                onClick={(e) => {
+                  setFilter(text);
+                }}
+              />
+            </i>
+          </div>
         </div>
         <TableDocs filter={filter} id={params.id} />
       </div>

@@ -9,6 +9,8 @@ import "../Styles/serviceFiles.css";
 import AddFiles from "./AddFiles";
 import Modal from "react-bootstrap/Modal";
 import Loader from "../Loader";
+import { RiDeleteBin5Line } from "react-icons/ri";
+import { VscFeedback } from "react-icons/vsc";
 
 const ServiceFiles = ({ service, project, ping, setPing, user }) => {
   const dispatch = useDispatch();
@@ -23,10 +25,13 @@ const ServiceFiles = ({ service, project, ping, setPing, user }) => {
     }, 1000);
     setShow(!show);
   };
-  const [feedback, setfeedback] = useState({
-    feedback: "",
-  });
+  const [toFeed, settoFeed] = useState(null);
+  const [fileId, setFileId] = useState("");
+  const [feed, setfeed] = useState({ feedback: "" });
   useEffect(() => {}, [dispatch, show]);
+  const handleFeed = () => {
+    dispatch(addFeed(fileId, feed));
+  };
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -53,20 +58,32 @@ const ServiceFiles = ({ service, project, ping, setPing, user }) => {
               <>
                 {item?.files?.map((file, index) => (
                   <div className="card">
-                    <p className="date" key={i.id}>
-                      {item?.createdAt.split("T")[0]}
-                    </p>
-                    {user?.isAdmin && (
-                      <button
-                        className="btn-remove"
-                        key={index?.id}
-                        onClick={() => {
-                          handleDelete(item, file);
-                        }}
-                      >
-                        Supprimer
-                      </button>
-                    )}
+                    <div className="cardHead">
+                      {" "}
+                      <p className="date" key={i.id}>
+                        {item?.createdAt.split("T")[0]}
+                      </p>
+                      {user?.isAdmin ? (
+                        <RiDeleteBin5Line
+                          key={index?.id}
+                          onClick={() => {
+                            handleDelete(item, file);
+                          }}
+                          className="tableActionBtn required"
+                        >
+                          Supprimer
+                        </RiDeleteBin5Line>
+                      ) : (
+                        <VscFeedback
+                          className="tableActionBtn"
+                          onClick={() => {
+                            handleShow();
+                            settoFeed(file);
+                            setFileId(item._id);
+                          }}
+                        />
+                      )}
+                    </div>{" "}
                     <a href={file?.url} target="_blank">
                       <img
                         className="img"
@@ -75,33 +92,29 @@ const ServiceFiles = ({ service, project, ping, setPing, user }) => {
                         alt="Bmes_Pdf_File"
                       />
                     </a>
+                    <div className="cardFooter">
+                      <p>{item?.description}</p>
+                    </div>
                   </div>
                 ))}
-                {!user?.isAdmin && (
-                  <div className="sendFeed">
-                    <input
-                      type="text"
-                      value={feedback.feedback}
-                      onChange={(e) =>
-                        setfeedback({
-                          ...feedback,
-                          feedback: e.target.value,
-                        })
-                      }
-                    />
-                    <button
-                      onClick={() => {
-                        dispatch(
-                          addFeed({
-                            id: item?.id,
-                            feed: feedback.feedback,
-                          })
-                        );
-                      }}
-                    >
-                      Envoyer
-                    </button>
-                  </div>
+                {show && (
+                  <Modal show={show} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                      <Modal.Title>
+                        <p>{fileId}</p>
+                      </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <p>Votre feedback</p>
+                      <input
+                        type="text"
+                        onChange={(e) =>
+                          setfeed({ ...feed, feedback: e.target.value })
+                        }
+                      />
+                      <button onClick={() => handleFeed()}>envoyer</button>
+                    </Modal.Body>
+                  </Modal>
                 )}
               </>
             ))}
