@@ -34,7 +34,7 @@
   row-gap: 20px;
 }
 .search {
-  border: 1px #1a2bc2 solid;
+  border: none;
   border-radius: 5px;
   padding: 10px;
   outline: none;

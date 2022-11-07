@@ -107,12 +107,12 @@ export const deleteFile = createAsyncThunk(
 
 export const addFeed = createAsyncThunk(
   "/files/addfeed/:id",
-  async ({ id, feed }) => {
-    console.log(id);
+  async (fileId, feed) => {
+    console.log(fileId);
     console.log(feed);
     try {
       let result = await axios.put(
-        `http://localhost:5000/files/addfeed/${id}`,
+        `http://localhost:5000/files/addfeed/${fileId}`,
         feed
       );
 

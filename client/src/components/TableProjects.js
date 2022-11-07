@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { getUserProjects } from "../redux/slices/projectSlice";
 import Loader from "./Loader";
 import "./Styles/Table.css";
+import { AiOutlineEye } from "react-icons/ai";
 
 const TableProjects = ({ filter, user }) => {
   const dispatch = useDispatch();
@@ -57,7 +58,7 @@ const TableProjects = ({ filter, user }) => {
                       <td>{project.createdAt.split("T")[0]}</td>
                       <td>
                         <Link to="/projetprofil" state={project}>
-                          <button className="actionBtn">Voir</button>
+                          <AiOutlineEye className="tableActionBtn" />
                         </Link>
                       </td>
                     </tr>

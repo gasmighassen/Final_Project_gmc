@@ -4,7 +4,12 @@
   justify-content: space-between;
 
   width: 20%;
-  background-color: #3a5878;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 36, 12, 1) 0%,
+    rgba(9, 89, 121, 1) 35%,
+    rgba(52, 109, 183, 1) 100%
+  );
 }
 .logoSideBar {
   height: 30%;
@@ -12,9 +17,7 @@
   margin-left: 5rem;
   cursor: pointer;
 }
-.sideBarHeader {
-  background-color: rgb(82, 136, 238);
-}
+
 .SideBarMenu {
   display: flex;
   flex-direction: column;
