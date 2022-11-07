@@ -15,7 +15,7 @@ const ServiceFilesSchema = new schema(
       required: true,
     },
     files: [{ url: { type: String, required: true } }],
-    feedback: [{ type: String, required: true }],
+    feedback: [{ type: String, required: false }],
     description: {
       type: String,
       required: true,

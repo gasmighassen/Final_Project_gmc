@@ -1,5 +1,4 @@
 .projectsWrap {
-  background-color: rgb(243, 240, 240);
   width: 80%;
 }
 
@@ -43,7 +42,7 @@
 }
 .searchBtn {
   width: 15%;
-  background-color: #1a2bc2;
+  background-color: rgb(82, 136, 238);
   text-decoration: none;
   border: none;
   padding: 15px 15px;

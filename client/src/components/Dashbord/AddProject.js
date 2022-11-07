@@ -45,6 +45,7 @@ const AddProject = ({ setShowP }) => {
                 setproject({ ...project, id_user: e.target.value })
               }
             >
+              <option selected></option>
               {users
                 .filter((el) => !el.isAdmin)
                 .map((user) => (
