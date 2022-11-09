@@ -8,9 +8,8 @@ router.post("/addservicefiles", async (req, res) => {
     const newSetItem = new ServiceFiles({
       services: req.body.services,
       id_project: req.body.id_project,
-      files: req.body.files,
+      url: req.body.url,
       description: req.body.description,
-      feedback: req.body.feedback,
     });
     let result = await newSetItem.save();
     res.send({ result: result, msg: "set items added" });
@@ -40,10 +39,12 @@ router.put("/addfile/:id", async (req, res) => {
   }
 });
 
-// Get category by id
+// Get files by id
 router.get("/file/:id", async (req, res) => {
   try {
-    let result = await ServiceFiles.find({ id_project: req.params.id });
+    let result = await ServiceFiles.find({
+      id_project: req.params.id,
+    }).populate("_id", "id_feedback");
     res.send({ files: result, msg: "done" });
   } catch (error) {
     console.log(error);
@@ -62,26 +63,13 @@ router.get("/allfeeds", async (req, res) => {
   }
 });
 //Delete file
-router.put("/deletefile/:id/:fileId", async (req, res) => {
+router.delete("/deletefile/:id/", async (req, res) => {
   try {
-    let service = await ServiceFiles.findOne({
+    let service = await ServiceFiles.findOneAndDelete({
       _id: req.params.id,
     });
-    let files = service.files;
 
-    let filtred = files.filter((el) => el._id != req.params.fileId);
-    if (filtred.length == 0) {
-      var result = await ServiceFiles.findOneAndDelete({ _id: req.params.id });
-    } else {
-      var result = await ServiceFiles.findOneAndUpdate(
-        {
-          _id: req.params.id,
-        },
-        { $set: { files: filtred } }
-      );
-    }
-
-    res.send({ result: result, msg: "updated successfully" });
+    res.send({ result: service, msg: "Deleted successfully" });
   } catch (error) {
     res.send(error);
     console.log(error);
@@ -89,10 +77,10 @@ router.put("/deletefile/:id/:fileId", async (req, res) => {
 });
 
 // add feedback to file
-router.put("/addfeed/:id", async (req, res) => {
+router.put("/feedback/:id/", async (req, res) => {
   try {
-    let newFeed = req.body.feedback;
-
+    let newFeed = req.body.comment;
+    console.log(newFeed);
     var result = await ServiceFiles.findOneAndUpdate(
       {
         _id: req.params.id,
@@ -101,7 +89,7 @@ router.put("/addfeed/:id", async (req, res) => {
       { new: true }
     );
 
-    res.send({ result: result, msg: "updated successfully" });
+    res.send({ result: result, msg: "feedback added" });
   } catch (error) {
     res.send(error);
     console.log(error);

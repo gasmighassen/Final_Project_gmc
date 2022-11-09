@@ -14,11 +14,18 @@ const ServiceFilesSchema = new schema(
       ref: "Project",
       required: true,
     },
-    files: [{ url: { type: String, required: true } }],
-    feedback: [{ type: String, required: false }],
-    description: {
+    url: {
       type: String,
       required: true,
+    },
+    feedback: [
+      {
+        comment: { type: String },
+      },
+    ],
+    description: {
+      type: String,
+      required: false,
     },
   },
   { timestamps: true }
