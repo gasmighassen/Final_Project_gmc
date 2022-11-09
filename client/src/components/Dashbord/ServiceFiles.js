@@ -18,23 +18,22 @@ const ServiceFiles = ({ service, project, ping, setPing, user }) => {
 
   const { isLoading } = useSelector((state) => state.service);
   const [show, setShow] = useState(false);
-  const handleDelete = (item, file) => {
-    dispatch(deleteFile({ service: item?._id, file: file?._id }));
-    setTimeout(() => {
+  const handleDelete = async (item) => {
+    await dispatch(deleteFile({ fileId: item?._id })).then(() => {
       dispatch(ProjectFiles(project._id));
-    }, 1000);
-    setShow(!show);
+    });
   };
-  const [toFeed, settoFeed] = useState(null);
+
   const [fileId, setFileId] = useState("");
-  const [feed, setfeed] = useState({ feedback: "" });
+  const [feed, setfeed] = useState({ comment: "" });
   useEffect(() => {}, [dispatch, show]);
   const handleFeed = () => {
-    dispatch(addFeed(fileId, feed));
+    console.log(fileId);
+    dispatch(addFeed({ fileId, feed }));
+    setPing(!ping);
   };
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
   return (
     <>
       <AddFiles
@@ -48,26 +47,17 @@ const ServiceFiles = ({ service, project, ping, setPing, user }) => {
       ) : (
         <div className="container">
           {items
-            ?.filter(
-              (item) =>
-                item?.services === service?._id &&
-                item?.files != null &&
-                item?.files?.length > 0
-            )
-            .map((item, i) => (
+            ?.filter((item) => item?.services === service?._id && item !== null)
+            ?.map((item, i) => (
               <>
-                {item?.files?.map((file, index) => (
+                {
                   <div className="card">
                     <div className="cardHead">
-                      {" "}
-                      <p className="date" key={i.id}>
-                        {item?.createdAt.split("T")[0]}
-                      </p>
+                      <p className="date">{item?.createdAt.split("T")[0]}</p>
                       {user?.isAdmin ? (
                         <RiDeleteBin5Line
-                          key={index?.id}
                           onClick={() => {
-                            handleDelete(item, file);
+                            handleDelete(item);
                           }}
                           className="tableActionBtn required"
                         >
@@ -78,17 +68,15 @@ const ServiceFiles = ({ service, project, ping, setPing, user }) => {
                           className="tableActionBtn"
                           onClick={() => {
                             handleShow();
-                            settoFeed(file);
                             setFileId(item._id);
                           }}
                         />
                       )}
                     </div>{" "}
-                    <a href={file?.url} target="_blank">
+                    <a href={item?.url} target="_blank">
                       <img
                         className="img"
-                        key={index?.id}
-                        src={file?.url}
+                        src={item?.url}
                         alt="Bmes_Pdf_File"
                       />
                     </a>
@@ -96,12 +84,12 @@ const ServiceFiles = ({ service, project, ping, setPing, user }) => {
                       <p>{item?.description}</p>
                     </div>
                   </div>
-                ))}
+                }
                 {show && (
                   <Modal show={show} onHide={handleClose}>
                     <Modal.Header closeButton>
                       <Modal.Title>
-                        <p>{fileId}</p>
+                        <p>{}</p>
                       </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
@@ -109,7 +97,7 @@ const ServiceFiles = ({ service, project, ping, setPing, user }) => {
                       <input
                         type="text"
                         onChange={(e) =>
-                          setfeed({ ...feed, feedback: e.target.value })
+                          setfeed({ ...feed, comment: e.target.value })
                         }
                       />
                       <button onClick={() => handleFeed()}>envoyer</button>

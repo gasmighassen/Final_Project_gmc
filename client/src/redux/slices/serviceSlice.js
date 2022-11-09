@@ -19,6 +19,7 @@ export const addServiceFile = createAsyncThunk(
   "files/addservicefiles",
   async (file) => {
     try {
+      console.log(file);
       let response = await axios.post(
         "http://localhost:5000/files/addservicefiles",
         file
@@ -92,11 +93,11 @@ export const delService = createAsyncThunk(
   }
 );
 export const deleteFile = createAsyncThunk(
-  "/files/deletefile/:service/:file",
-  async ({ service, file }) => {
+  "/files/deletefile/:fileId",
+  async ({ fileId }) => {
     try {
-      let result = await axios.put(
-        `http://localhost:5000/files/deletefile/${service}/${file}`
+      let result = await axios.delete(
+        `http://localhost:5000/files/deletefile/${fileId}`
       );
       return result.data;
     } catch (error) {
@@ -106,13 +107,11 @@ export const deleteFile = createAsyncThunk(
 );
 
 export const addFeed = createAsyncThunk(
-  "/files/addfeed/:id",
-  async (fileId, feed) => {
-    console.log(fileId);
-    console.log(feed);
+  "/files/feedback/:id/",
+  async ({ fileId, feed }) => {
     try {
       let result = await axios.put(
-        `http://localhost:5000/files/addfeed/${fileId}`,
+        `http://localhost:5000/files/feedback/${fileId}`,
         feed
       );
 
@@ -246,7 +245,7 @@ export const serviceSlice = createSlice({
     [addFeed.fulfilled]: (state, action) => {
       state.status = "success";
       state.isLoading = false;
-      // state.files = action.payload?.result;
+      state.feeds = action.payload?.result;
     },
   },
 });

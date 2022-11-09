@@ -8,13 +8,14 @@ import "../Styles/AddFiles.css";
 function AddFiles({ service, project, ping, setPing }) {
   const user = useSelector((state) => state.user?.user);
   const dispatch = useDispatch();
-  const [show, setshow] = useState(false);
+  let [uploadedFiles, setuploadedFiles] = useState([]);
   const [upload, setupload] = useState([]);
+  const [description, setdescription] = useState("");
 
   const [file, setfile] = useState({
     services: service?._id,
     id_project: project._id,
-    files: [],
+    url: [],
     description: "",
     feedback: "",
   });
@@ -61,17 +62,24 @@ function AddFiles({ service, project, ping, setPing }) {
         )
         .then((response) => {
           const data = response.data;
-          const fileURL = { url: data.secure_url, id: data.asset_id }; // You should store this URL for future references in your app
+          const fileURL = { files: data.secure_url, id: data.asset_id }; // You should store this URL for future references in your app
+          uploadedFiles.push(data);
           progressDiv.style.display = "none";
           setupload([]);
+          dispatch(
+            addServiceFile({
+              services: service._id,
+              id_project: project._id,
+              url: data.secure_url,
+              description: "description ici ...",
+            })
+          );
+
           return fileURL;
         });
     });
-
     // Once all the files are uploaded
     await axios.all(uploaders).then(async (result) => {
-      setfile({ ...file, files: result });
-      dispatch(addServiceFile({ ...file, files: result }));
       setPing(!ping);
       // ... perform after upload is successful operation
     });
@@ -100,13 +108,7 @@ function AddFiles({ service, project, ping, setPing }) {
                 }}
               />
             </label>
-            <h4>Merci d'ecrire une description..</h4>{" "}
-            <textarea
-              name="feed"
-              onChange={(e) =>
-                setfile({ ...file, description: e.target.value })
-              }
-            />
+
             {upload[0] ? (
               <input
                 className="btn-upload"
