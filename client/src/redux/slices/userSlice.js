@@ -35,13 +35,13 @@ export const userCurrent = createAsyncThunk("user/current", async () => {
 
 export const updateUser = createAsyncThunk(
   "user/update",
-  async ({ id, user }) => {
+  async ({ id, update }) => {
     try {
       let response = await axios.put(
         `http://localhost:5000/user/update/${id}`,
-        user
+        update
       );
-      return await response.data;
+      return response.data;
     } catch (error) {
       console.log(error);
     }
@@ -126,8 +126,8 @@ export const userSlice = createSlice({
       state.isLoading = true;
     },
     [updateUser.fulfilled]: (state, action) => {
-      state.userUpdated = action.payload.msg;
-      state.newuserupdated = action.payload.newProfile;
+      state.userUpdated = action.payload;
+      state.newuserupdated = action.payload;
       state.status = "success";
       state.isLoading = false;
     },

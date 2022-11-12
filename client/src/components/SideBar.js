@@ -8,7 +8,7 @@ import { MdOutlineFeedback } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../redux/slices/userSlice";
 
-const SideBar = ({logo='./img/logo.png'}) => {
+const SideBar = ({ logo = "./img/logo.png" }) => {
   const user = useSelector((state) => state.user?.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -38,25 +38,17 @@ const SideBar = ({logo='./img/logo.png'}) => {
           <li
             className="SideBarMenuItems"
             onClick={() => {
-              navigate(`/document/${user._id}`);
+              navigate(`/document/${user?._id}`);
             }}
           >
             <BsFiles />
             Mes Documents
           </li>
+
           <li
             className="SideBarMenuItems"
             onClick={() => {
-              navigate("/feedbacks");
-            }}
-          >
-            <MdOutlineFeedback />
-            Feedbacks
-          </li>
-          <li
-            className="SideBarMenuItems"
-            onClick={() => {
-              navigate("/setting");
+              navigate(`/setting`);
             }}
           >
             <AiOutlineSetting />

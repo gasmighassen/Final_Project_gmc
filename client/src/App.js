@@ -21,8 +21,6 @@ import UsersList from "./components/Dashbord/UsersList";
 import Register from "./components/Dashbord/Register";
 import { allServices } from "./redux/slices/serviceSlice";
 import ProjectProfile from "./components/Dashbord/ProjectProfile";
-import FeedBack from "./Pages/FeedBack";
-import Service from "./components/Service";
 
 function App() {
   const dispatch = useDispatch();
@@ -63,8 +61,6 @@ function App() {
 
           <Route path="/projects" element={<UserProjects />} />
 
-          <Route path="/feedbacks" element={<FeedBack />} />
-
           <Route path="/dashbord" element={<DashAdmin />} />
 
           <Route path="/allprojects" element={<ProjectsList />} />
@@ -74,6 +70,7 @@ function App() {
           <Route path="/projetprofil" element={<ProjectProfile />} />
 
           <Route path="/adduser" element={<Register />} />
+          <Route path="/setting" element={<Setting />} />
         </Route>
       </Routes>
     </>

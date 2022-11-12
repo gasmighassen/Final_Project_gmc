@@ -16,16 +16,16 @@ function TableDocs({ filter, id }) {
           <th>Date creation</th>
         </thead>
         <tbody>
-          {userDocs.map((doc, i) => (
+          {userDocs?.map((doc, i) => (
             <tr key={i}>
               <td>{i}</td>
               <td>
-                <a href={doc.docs}>
+                <a href={doc?.docs}>
                   <img className="pdfLogo" src="/img/pdf.png" alt="pdf" />
-                  <p>{doc.titre}</p>
+                  <p>{doc?.titre}</p>
                 </a>
               </td>
-              <td>{doc.createdAt.split("T")[0]}</td>
+              <td>{doc?.createdAt.split("T")[0]}</td>
             </tr>
           ))}
         </tbody>

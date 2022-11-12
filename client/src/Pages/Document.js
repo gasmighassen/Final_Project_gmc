@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import Logo from "../assets/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import SideBarAdmin from "../components/Dashbord/SideBarAdmin";
 
 const Document = () => {
   const user = useSelector((state) => state.user?.user);
@@ -14,7 +15,8 @@ const Document = () => {
   const [filter, setFilter] = useState("");
   return (
     <div className="profileLayout">
-      <SideBar logo={Logo} />
+      {user?.isAdmin ? <SideBarAdmin /> : <SideBar logo={Logo} />}
+
       <div className="projectsWrap">
         <div className="SearchProjects">
           <h1 className="profileText">Liste des documents</h1>

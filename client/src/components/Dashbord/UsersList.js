@@ -4,6 +4,9 @@ import { Link } from "react-router-dom";
 import SideBarAdmin from "./SideBarAdmin";
 import { Modal, Button } from "react-bootstrap";
 import { usersDel, usersGet } from "../../redux/slices/userSlice";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
+
 const UsersList = () => {
   const dispatch = useDispatch();
   const [text, setText] = useState("");
@@ -31,20 +34,24 @@ const UsersList = () => {
       <div className="projectsWrap">
         <div className="SearchProjects">
           <h1 className="profileText">Liste des clients</h1>
-          <input
-            type="text"
-            placeholder="Vous cherchez quel projet..."
-            className="search"
-            onChange={(e) => setText(e.target.value)}
-          />
-          <button
-            className="searchBtn"
-            onClick={(e) => {
-              setFilter(text);
-            }}
-          >
-            Rechercher
-          </button>
+          <div className="searchP">
+            <input
+              type="text"
+              placeholder="Vous cherchez quel projet..."
+              className="search"
+              onChange={(e) => setText(e.target.value)}
+            />
+
+            <i>
+              <FontAwesomeIcon
+                icon={faSearch}
+                onClick={(e) => {
+                  setFilter(text);
+                }}
+              />
+            </i>
+          </div>
+
           <div className="tableContainer">
             <Modal show={showDelete} onHide={handleCloseDelete}>
               <Modal.Header closeButton>

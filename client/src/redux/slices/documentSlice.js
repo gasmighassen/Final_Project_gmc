@@ -22,6 +22,7 @@ export const allDocs = createAsyncThunk("document/alldoc", async () => {
 });
 export const docUser = createAsyncThunk("document/userdocs", async (id) => {
   try {
+    console.log(id);
     let result = await axios.get(
       `http://localhost:5000/document/userdocs/${id}`
     );

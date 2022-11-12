@@ -1,0 +1,81 @@
+.setting_container {
+  width: 70%;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.info_personel {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  align-items: center;
+
+  height: 10vh;
+}
+.setting_form {
+  display: flex;
+  flex-direction: column;
+  row-gap: 2rem;
+}
+.email_field {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  align-items: center;
+
+  height: 10vh;
+}
+.phone_field {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  align-items: center;
+
+  height: 10vh;
+}
+.change_password {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  align-items: center;
+
+  height: 10vh;
+}
+.change_password_text {
+  width: 80%;
+}
+.info_details {
+  display: flex;
+  justify-content: flex-start;
+  width: 42%;
+}
+.info_details_nom {
+  display: flex;
+  justify-content: flex-start;
+  width: 47%;
+}
+.info_details_email {
+  display: flex;
+  justify-content: flex-start;
+  width: 38%;
+}
+.grey {
+  color: #717174;
+}
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}

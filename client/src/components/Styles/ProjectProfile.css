@@ -46,7 +46,7 @@
 .documentSelect {
   display: flex;
   flex-direction: column;
-
-  height: 20vh;
-  justify-content: space-around;
+  height: 100vh;
+  justify-content: flex-start;
+  row-gap: 5%;
 }
