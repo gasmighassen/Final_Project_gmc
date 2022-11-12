@@ -96,41 +96,38 @@ function AddFiles({ service, project, ping, setPing }) {
       <span className="project-path">
         {project.projectName}/{service.serviceType}
       </span>
-      {user.isAdmin ? (
-        <>
-          <h1>Ajout des fichiers</h1>
-          <div className="addImage">
-            <label for="input-upload">
-              <input
-                className="input-upload"
-                type="file"
-                multiple
-                name="image"
-                accept="image/*,video/*"
-                required
-                onChange={(e) => {
-                  setupload(Object.values(e.target.files));
-                }}
-              />
-            </label>
 
-            {upload[0] ? (
-              <input
-                className="btn-upload"
-                type="button"
-                value="upload"
-                onClick={() => {
-                  handleDrop();
-                }}
-              />
-            ) : null}
-          </div>
-          <div id="progress-div" style={{ display: "none" }}>
-            <label for="progress-bar">0%</label>
-            <progress id="progress-bar" value="0" max="100"></progress>
-          </div>
-        </>
-      ) : null}
+      <h1>Ajout des fichiers</h1>
+      <div className="addImage">
+        <label for="input-upload">
+          <input
+            className="input-upload"
+            type="file"
+            multiple
+            name="image"
+            accept="image/*,video/*"
+            required
+            onChange={(e) => {
+              setupload(Object.values(e.target.files));
+            }}
+          />
+        </label>
+
+        {upload[0] ? (
+          <input
+            className="btn-upload"
+            type="button"
+            value="upload"
+            onClick={() => {
+              handleDrop();
+            }}
+          />
+        ) : null}
+      </div>
+      <div id="progress-div" style={{ display: "none" }}>
+        <label for="progress-bar">0%</label>
+        <progress id="progress-bar" value="0" max="100"></progress>
+      </div>
     </div>
   );
 }

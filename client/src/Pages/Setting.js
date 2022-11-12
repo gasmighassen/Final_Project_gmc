@@ -6,15 +6,19 @@ import { useDispatch, useSelector } from "react-redux";
 import "./../components/Styles/settings.css";
 import SideBarAdmin from "../components/Dashbord/SideBarAdmin";
 import Modal from "react-bootstrap/Modal";
-import { updateUser, userCurrent } from "../redux/slices/userSlice";
-const Setting = () => {
+import {
+  updateUser,
+  updateUserPassword,
+  userCurrent,
+} from "../redux/slices/userSlice";
+export default function Setting() {
   const [showName, setShowName] = useState(false);
   const [showEmail, setShowEmail] = useState(false);
   const [showPhone, setShowPhone] = useState(false);
   const [showPass, setShowPass] = useState(false);
 
   const user = useSelector((state) => state.user?.user);
-  console.log(user);
+
   const dispatch = useDispatch();
   const [update, setupdate] = useState({
     email: user.email,
@@ -22,8 +26,11 @@ const Setting = () => {
     name: user.name,
     phone: user.number,
   });
-  const [updatePass, setUpdatePass] = useState("");
-  console.log(update);
+  const [password, setpassword] = useState({ password: user.password });
+  const handleChangePass = () => {
+    dispatch(updateUserPassword({ id: user?._id, password }));
+  };
+
   const handleUpdate = () => {
     dispatch(updateUser({ id: user?._id, update }));
     setping(!ping);
@@ -31,7 +38,54 @@ const Setting = () => {
   const [ping, setping] = useState(false);
   useEffect(() => {
     dispatch(userCurrent(user?._id));
-  }, [updateUser, ping]);
+  }, [updateUser, ping, updateUserPassword]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setupdate({ ...update, [name]: value });
+  };
+  const [formErrors, setFormErrors] = useState({});
+  const [isSubmit, setIsSubmit] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    setFormErrors(validate({ ...update }));
+    setIsSubmit(true);
+  };
+  useEffect(() => {
+    console.log(formErrors);
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      handleUpdate();
+    }
+  }, [formErrors]);
+
+  const validate = (values) => {
+    const errors = {};
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+    const regexNumber = RegExp("^[0-9]$");
+    const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+
+    if (specialChars.test(values.name)) {
+      errors.name = "Nom contient caractéres speciaux!";
+    }
+    if (specialChars.test(values.lastName)) {
+      errors.lastName = "Prenom contient caractéres speciaux!";
+    }
+    if (!values.email) {
+      errors.email = "Email is required!";
+    }
+    if (!regex.test(values.email)) {
+      errors.email = "This is not a valid email format!";
+    }
+    if (!regexNumber.test(values.phone)) {
+      errors.phone = "This is not a valid Phone number format!";
+    }
+    if (!values.phone) {
+      errors.phone = "Phone is required!";
+    }
+    return errors;
+  };
 
   return (
     <div className="profileLayout">
@@ -117,19 +171,13 @@ const Setting = () => {
           </Modal.Header>
           <Modal.Body>
             <p>Nom</p>
-            <input
-              type="text"
-              onChange={(e) => setupdate({ ...update, name: e.target.value })}
-            />
+            <input name="name" type="text" onChange={handleChange} />
+            <p className="required">{formErrors.name}</p>
+            <button onClick={handleSubmit}>envoyer</button>
             <p>Prenom</p>
-            <input
-              className="phoneNumber"
-              type="number"
-              onChange={(e) =>
-                setupdate({ ...update, lastName: e.target.value })
-              }
-            />
-            <button onClick={handleUpdate}>envoyer</button>
+            <input name="lastName" type="text" onChange={handleChange} />
+            <p className="required">{formErrors.lastName}</p>
+            <button onClick={handleSubmit}>envoyer</button>
           </Modal.Body>
         </Modal>
       )}
@@ -142,12 +190,9 @@ const Setting = () => {
           </Modal.Header>
           <Modal.Body>
             <p>Modifier votre adresse mail</p>
-            <input
-              type="text"
-              onChange={(e) => setupdate({ ...update, email: e.target.value })}
-            />
-
-            <button onClick={handleUpdate}>envoyer</button>
+            <input name="email" type="text" onChange={handleChange} />
+            <p className="required">{formErrors.email}</p>
+            <button onClick={handleSubmit}>envoyer</button>
           </Modal.Body>
         </Modal>
       )}
@@ -160,12 +205,9 @@ const Setting = () => {
           </Modal.Header>
           <Modal.Body>
             <p>Modifier votre numero telephone</p>
-            <input
-              type="text"
-              onChange={(e) => setupdate({ ...update, phone: e.target.value })}
-            />
-
-            <button onClick={handleUpdate}>envoyer</button>
+            <input name="phone" type="text" onChange={handleChange} />
+            <p className="required">{formErrors.phone}</p>
+            <button onClick={handleSubmit}>envoyer</button>
           </Modal.Body>
         </Modal>
       )}
@@ -179,16 +221,17 @@ const Setting = () => {
           <Modal.Body>
             <p>Modifier votre mot de passe </p>
             <input
-              type="text"
-              onChange={(e) => setUpdatePass(e.target.value)}
+              name="password"
+              type="password"
+              onChange={(e) =>
+                setpassword({ ...password, password: e.target.value })
+              }
             />
 
-            <button onClick={handleUpdate}>envoyer</button>
+            <button onClick={handleChangePass}>envoyer</button>
           </Modal.Body>
         </Modal>
       )}
     </div>
   );
-};
-
-export default Setting;
+}

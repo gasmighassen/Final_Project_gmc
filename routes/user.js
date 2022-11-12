@@ -57,6 +57,27 @@ router.put("/update/:id", async (req, res) => {
     console.log(error);
   }
 });
+//Put methode update user password
+router.put("/updatePassword/:id", async (req, res) => {
+  try {
+    const newPassword = req.body.password;
+    const salt = 10;
+    const genSalt = await bcrypt.genSalt(salt);
+    const hashedPassword = await bcrypt.hash(newPassword, genSalt);
+
+    let result = await User.findByIdAndUpdate(
+      {
+        _id: req.params.id,
+      },
+      { $set: { password: hashedPassword } },
+      { new: true }
+    );
+    res.status(200).send({ newPassword: result, msg: "password updated.." });
+  } catch (error) {
+    res.status(500).send("cannot update the profile..");
+    console.log(error);
+  }
+});
 
 //get methode current user
 router.get("/current", isAuth(), (req, res) => {

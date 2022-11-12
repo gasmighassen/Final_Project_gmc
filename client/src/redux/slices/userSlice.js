@@ -48,6 +48,22 @@ export const updateUser = createAsyncThunk(
   }
 );
 
+export const updateUserPassword = createAsyncThunk(
+  "user/updatePassword",
+  async ({ id, password }) => {
+    try {
+      console.log(password);
+      let response = await axios.put(
+        `http://localhost:5000/user/updatePassword/${id}`,
+        password
+      );
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
 export const usersGet = createAsyncThunk("admin/get", async () => {
   try {
     let response = axios.get("http://localhost:5000/admin/get");
@@ -70,6 +86,7 @@ const initialState = {
   users: [],
   status: null,
   newuserupdated: {},
+
   userUpdated: null,
   isLoading: false,
 };
@@ -157,6 +174,19 @@ export const userSlice = createSlice({
       state.isLoading = false;
     },
     [usersDel.rejected]: (state) => {
+      state.status = "fail";
+      state.isLoading = false;
+    },
+    [updateUserPassword.pending]: (state) => {
+      state.status = "pending";
+      state.isLoading = true;
+    },
+    [updateUserPassword.fulfilled]: (state) => {
+      state.status = "success";
+
+      state.isLoading = false;
+    },
+    [updateUserPassword.rejected]: (state) => {
       state.status = "fail";
       state.isLoading = false;
     },
