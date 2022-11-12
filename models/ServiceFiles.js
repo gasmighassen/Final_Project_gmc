@@ -18,6 +18,10 @@ const ServiceFilesSchema = new schema(
       type: String,
       required: true,
     },
+    type: {
+      type: String,
+      required: true,
+    },
     feedback: [
       {
         comment: { type: String },

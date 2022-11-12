@@ -44,15 +44,7 @@ const SideBarAdmin = ({ logo = "./img/logo.png" }) => {
             <BsFiles />
             Liste des clients
           </li>
-          <li
-            className="SideBarMenuItems"
-            onClick={() => {
-              navigate("/feedbacks");
-            }}
-          >
-            <MdOutlineFeedback />
-            Feedbacks
-          </li>
+
           <li
             className="SideBarMenuItems"
             onClick={() => {

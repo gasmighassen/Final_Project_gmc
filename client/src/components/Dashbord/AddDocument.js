@@ -5,7 +5,7 @@ import { addDoc } from "../../redux/slices/documentSlice";
 
 function AddDocument({ setShowD }) {
   const user = useSelector((state) => state.user?.user);
-  const users = useSelector((state) => state.user?.users);
+  const allusers = useSelector((state) => state.user?.users);
   const dispatch = useDispatch();
   const [upload, setupload] = useState("");
 
@@ -15,8 +15,8 @@ function AddDocument({ setShowD }) {
     titre: "",
   });
   useEffect(() => {
-    setfile({ ...file, id_user: user?._id });
-  }, [file, user]);
+    setfile({ ...file, id_user: "" });
+  }, []);
   const uploadImage = async () => {
     const form = new FormData();
     form.append("upload_preset", "bmes_file");
@@ -44,10 +44,13 @@ function AddDocument({ setShowD }) {
               name="project"
               onChange={(e) => setfile({ ...file, id_user: e.target.value })}
             >
-              {users
+              <option selected></option>
+              {allusers
                 .filter((el) => !el.isAdmin)
-                .map((el) => (
-                  <option value={el._id}>{el.name}</option>
+                .map((user) => (
+                  <option value={user?._id}>
+                    {user.name} {user.lastName}
+                  </option>
                 ))}
             </select>
             <input

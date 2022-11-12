@@ -16,6 +16,7 @@ function AddFiles({ service, project, ping, setPing }) {
     services: service?._id,
     id_project: project._id,
     url: [],
+    type: "",
     description: "",
     feedback: "",
   });
@@ -62,7 +63,11 @@ function AddFiles({ service, project, ping, setPing }) {
         )
         .then((response) => {
           const data = response.data;
-          const fileURL = { files: data.secure_url, id: data.asset_id }; // You should store this URL for future references in your app
+          const fileURL = {
+            files: data.secure_url,
+            id: data.asset_id,
+            type: data.resource_type,
+          }; // You should store this URL for future references in your app
           uploadedFiles.push(data);
           progressDiv.style.display = "none";
           setupload([]);
@@ -71,10 +76,11 @@ function AddFiles({ service, project, ping, setPing }) {
               services: service._id,
               id_project: project._id,
               url: data.secure_url,
+              type: data.resource_type,
               description: "description ici ...",
             })
           );
-
+          console.log(data);
           return fileURL;
         });
     });
@@ -95,13 +101,12 @@ function AddFiles({ service, project, ping, setPing }) {
           <h1>Ajout des fichiers</h1>
           <div className="addImage">
             <label for="input-upload">
-              Merci de choisir une fichier
               <input
                 className="input-upload"
                 type="file"
                 multiple
                 name="image"
-                accept="image/*"
+                accept="image/*,video/*"
                 required
                 onChange={(e) => {
                   setupload(Object.values(e.target.files));

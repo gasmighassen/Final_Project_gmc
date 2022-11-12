@@ -18,6 +18,7 @@ const ServiceFiles = ({ service, project, ping, setPing, user }) => {
 
   const { isLoading } = useSelector((state) => state.service);
   const [show, setShow] = useState(false);
+
   const handleDelete = async (item) => {
     await dispatch(deleteFile({ fileId: item?._id })).then(() => {
       dispatch(ProjectFiles(project._id));
@@ -32,6 +33,23 @@ const ServiceFiles = ({ service, project, ping, setPing, user }) => {
     dispatch(addFeed({ fileId, feed }));
     setPing(!ping);
   };
+  const [Image, setImage] = useState({
+    imageUrl: "",
+    type: "",
+    feedbacks: [],
+  });
+  console.log(Image);
+  const [modal, setModal] = useState(false);
+
+  const toggleModal = () => {
+    setModal(!modal);
+  };
+
+  if (modal) {
+    document.body.classList.add("active-modal");
+  } else {
+    document.body.classList.remove("active-modal");
+  }
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   return (
@@ -73,13 +91,38 @@ const ServiceFiles = ({ service, project, ping, setPing, user }) => {
                         />
                       )}
                     </div>{" "}
-                    <a href={item?.url} target="_blank">
+                    {item?.type === "video" ? (
+                      <video
+                        width="320"
+                        height="240"
+                        onClick={() => {
+                          setImage({
+                            ...Image,
+                            imageUrl: item?.url,
+                            type: item?.type,
+                            feedbacks: item?.feedback,
+                          });
+                          toggleModal();
+                        }}
+                      >
+                        <source src={item.url} type="video/mp4" />
+                      </video>
+                    ) : (
                       <img
                         className="img"
                         src={item?.url}
                         alt="Bmes_Pdf_File"
+                        onClick={() => {
+                          setImage({
+                            ...Image,
+                            imageUrl: item?.url,
+                            type: item?.type,
+                            feedbacks: item?.feedback,
+                          });
+                          toggleModal();
+                        }}
                       />
-                    </a>
+                    )}
                     <div className="cardFooter">
                       <p>{item?.description}</p>
                     </div>
@@ -106,6 +149,31 @@ const ServiceFiles = ({ service, project, ping, setPing, user }) => {
                 )}
               </>
             ))}
+        </div>
+      )}
+      {modal && (
+        <div className="modalMedia">
+          <div onClick={toggleModal} className="overlay">
+            {" "}
+            <span className="close-modal" onClick={toggleModal}>
+              X
+            </span>
+          </div>
+          <div className="modalContent">
+            {Image.type === "video" ? (
+              <video width="100%" height="100%" controls>
+                <source src={Image.imageUrl} type="video/mp4" />
+              </video>
+            ) : (
+              <img src={Image.imageUrl} alt="" className="mImage" />
+            )}
+
+            <div className="feedbacks">
+              {Image?.feedbacks?.map((el) => (
+                <p className="feedText">{el.comment}</p>
+              ))}
+            </div>
+          </div>
         </div>
       )}
     </>

@@ -9,6 +9,7 @@ router.post("/addservicefiles", async (req, res) => {
       services: req.body.services,
       id_project: req.body.id_project,
       url: req.body.url,
+      type: req.body.type,
       description: req.body.description,
     });
     let result = await newSetItem.save();
@@ -50,7 +51,7 @@ router.get("/file/:id", async (req, res) => {
     console.log(error);
   }
 });
-// Get all files
+// Get all feedback
 // http://localhost:5000/files/allfeeds
 router.get("/allfeeds", async (req, res) => {
   try {
@@ -79,7 +80,7 @@ router.delete("/deletefile/:id/", async (req, res) => {
 // add feedback to file
 router.put("/feedback/:id/", async (req, res) => {
   try {
-    let newFeed = req.body.comment;
+    let newFeed = req.body;
     console.log(newFeed);
     var result = await ServiceFiles.findOneAndUpdate(
       {

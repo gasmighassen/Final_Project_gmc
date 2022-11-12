@@ -1,6 +1,6 @@
 .n-service {
   width: auto;
-
+  height: 90vh;
   display: flex;
   align-items: left;
   justify-content: flex-start;
