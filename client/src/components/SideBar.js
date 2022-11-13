@@ -48,7 +48,7 @@ const SideBar = ({ logo = "./img/logo.png" }) => {
           <li
             className="SideBarMenuItems"
             onClick={() => {
-              navigate(`/setting`);
+              navigate(`/setting/${user?._id}`);
             }}
           >
             <AiOutlineSetting />

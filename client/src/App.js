@@ -55,7 +55,7 @@ function App() {
         <Route path="/login" element={<Login />} />
 
         <Route element={<PrivateRoute />}>
-          <Route path="/setting" element={<Setting />} />
+          <Route path="/setting/:id" element={<Setting />} />
 
           <Route path="/document/:id" element={<Document />} />
 

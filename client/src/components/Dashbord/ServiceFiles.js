@@ -27,7 +27,7 @@ const ServiceFiles = ({ service, project, ping, setPing, user }) => {
 
   const [fileId, setFileId] = useState("");
   const [feed, setfeed] = useState({ comment: "" });
-  useEffect(() => {}, [dispatch, show]);
+
   const handleFeed = () => {
     console.log(fileId);
     dispatch(addFeed({ fileId, feed }));
@@ -36,9 +36,12 @@ const ServiceFiles = ({ service, project, ping, setPing, user }) => {
   const [Image, setImage] = useState({
     imageUrl: "",
     type: "",
+    imageId: "",
     feedbacks: [],
   });
-  console.log(Image);
+  useEffect(() => {
+    dispatch(ProjectFiles(project._id));
+  }, [ping]);
   const [modal, setModal] = useState(false);
 
   const toggleModal = () => {
@@ -50,8 +53,7 @@ const ServiceFiles = ({ service, project, ping, setPing, user }) => {
   } else {
     document.body.classList.remove("active-modal");
   }
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+
   return (
     <>
       <AddFiles
@@ -81,15 +83,7 @@ const ServiceFiles = ({ service, project, ping, setPing, user }) => {
                         >
                           Supprimer
                         </RiDeleteBin5Line>
-                      ) : (
-                        <VscFeedback
-                          className="tableActionBtn"
-                          onClick={() => {
-                            handleShow();
-                            setFileId(item._id);
-                          }}
-                        />
-                      )}
+                      ) : null}
                     </div>{" "}
                     {item?.type === "video" ? (
                       <video
@@ -100,9 +94,10 @@ const ServiceFiles = ({ service, project, ping, setPing, user }) => {
                             ...Image,
                             imageUrl: item?.url,
                             type: item?.type,
+                            imageId: item?._id,
                             feedbacks: item?.feedback,
                           });
-                          toggleModal();
+                          setModal(!modal);
                         }}
                       >
                         <source src={item.url} type="video/mp4" />
@@ -117,9 +112,10 @@ const ServiceFiles = ({ service, project, ping, setPing, user }) => {
                             ...Image,
                             imageUrl: item?.url,
                             type: item?.type,
+                            imageId: item?._id,
                             feedbacks: item?.feedback,
                           });
-                          toggleModal();
+                          setModal(!modal);
                         }}
                       />
                     )}
@@ -128,25 +124,6 @@ const ServiceFiles = ({ service, project, ping, setPing, user }) => {
                     </div>
                   </div>
                 }
-                {show && (
-                  <Modal show={show} onHide={handleClose}>
-                    <Modal.Header closeButton>
-                      <Modal.Title>
-                        <p>{}</p>
-                      </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                      <p>Votre feedback</p>
-                      <input
-                        type="text"
-                        onChange={(e) =>
-                          setfeed({ ...feed, comment: e.target.value })
-                        }
-                      />
-                      <button onClick={() => handleFeed()}>envoyer</button>
-                    </Modal.Body>
-                  </Modal>
-                )}
               </>
             ))}
         </div>
@@ -172,6 +149,22 @@ const ServiceFiles = ({ service, project, ping, setPing, user }) => {
               {Image?.feedbacks?.map((el) => (
                 <p className="feedText">{el.comment}</p>
               ))}
+              <div className="feedInput">
+                <input
+                  type="text"
+                  onChange={(e) => {
+                    setfeed({ ...feed, comment: e.target.value });
+                    setFileId(Image.imageId);
+                  }}
+                />
+                <button
+                  onClick={() => {
+                    handleFeed();
+                  }}
+                >
+                  envoyer
+                </button>
+              </div>
             </div>
           </div>
         </div>

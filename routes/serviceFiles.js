@@ -78,7 +78,7 @@ router.delete("/deletefile/:id/", async (req, res) => {
 });
 
 // add feedback to file
-router.put("/feedback/:id/", async (req, res) => {
+router.put("/feedback/:id", async (req, res) => {
   try {
     let newFeed = req.body;
     console.log(newFeed);

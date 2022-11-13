@@ -11,7 +11,11 @@ import {
   updateUserPassword,
   userCurrent,
 } from "../redux/slices/userSlice";
+import { useParams } from "react-router-dom";
+
 export default function Setting() {
+  const params = useParams();
+  const id = params.id;
   const [showName, setShowName] = useState(false);
   const [showEmail, setShowEmail] = useState(false);
   const [showPhone, setShowPhone] = useState(false);
@@ -21,23 +25,24 @@ export default function Setting() {
 
   const dispatch = useDispatch();
   const [update, setupdate] = useState({
-    email: user.email,
-    lastName: user.lastName,
-    name: user.name,
-    phone: user.number,
+    email: user?.email,
+    lastName: user?.lastName,
+    name: user?.name,
+    phone: user?.phone,
   });
+  console.log(update);
   const [password, setpassword] = useState({ password: user.password });
   const handleChangePass = () => {
-    dispatch(updateUserPassword({ id: user?._id, password }));
+    dispatch(updateUserPassword({ id, password }));
   };
 
   const handleUpdate = () => {
-    dispatch(updateUser({ id: user?._id, update }));
+    dispatch(updateUser({ id, update }));
     setping(!ping);
   };
   const [ping, setping] = useState(false);
   useEffect(() => {
-    dispatch(userCurrent(user?._id));
+    dispatch(userCurrent(id));
   }, [updateUser, ping, updateUserPassword]);
 
   const handleChange = (e) => {
@@ -50,7 +55,11 @@ export default function Setting() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    setFormErrors(validate({ ...update }));
+    setFormErrors(
+      validate({
+        ...update,
+      })
+    );
     setIsSubmit(true);
   };
   useEffect(() => {
@@ -62,27 +71,20 @@ export default function Setting() {
 
   const validate = (values) => {
     const errors = {};
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-    const regexNumber = RegExp("^[0-9]$");
+    const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    const regexNumber = /^[0-9]+$/;
     const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
 
     if (specialChars.test(values.name)) {
       errors.name = "Nom contient caractéres speciaux!";
-    }
-    if (specialChars.test(values.lastName)) {
+    } else if (specialChars.test(values.lastName)) {
       errors.lastName = "Prenom contient caractéres speciaux!";
-    }
-    if (!values.email) {
-      errors.email = "Email is required!";
-    }
-    if (!regex.test(values.email)) {
-      errors.email = "This is not a valid email format!";
-    }
-    if (!regexNumber.test(values.phone)) {
-      errors.phone = "This is not a valid Phone number format!";
-    }
-    if (!values.phone) {
-      errors.phone = "Phone is required!";
+    } else if (!regex.test(values.email)) {
+      errors.email = "email invalide!";
+    } else if (!values.email) {
+      errors.email = "email is empty!";
+    } else if (!regexNumber.test(values.phone)) {
+      errors.phone = "phone number invalide!";
     }
     return errors;
   };
@@ -105,6 +107,7 @@ export default function Setting() {
             <button
               onClick={() => {
                 setShowName(true);
+                setping(!ping);
               }}
             >
               Modifer
@@ -121,6 +124,7 @@ export default function Setting() {
               <button
                 onClick={() => {
                   setShowEmail(true);
+                  setping(!ping);
                 }}
               >
                 Modifer
@@ -136,6 +140,7 @@ export default function Setting() {
               <button
                 onClick={() => {
                   setShowPhone(true);
+                  setping(!ping);
                 }}
               >
                 Modifer
@@ -155,6 +160,7 @@ export default function Setting() {
             <button
               onClick={() => {
                 setShowPass(true);
+                setping(!ping);
               }}
             >
               Modifer
@@ -170,14 +176,16 @@ export default function Setting() {
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <p>Nom</p>
-            <input name="name" type="text" onChange={handleChange} />
-            <p className="required">{formErrors.name}</p>
-            <button onClick={handleSubmit}>envoyer</button>
-            <p>Prenom</p>
-            <input name="lastName" type="text" onChange={handleChange} />
-            <p className="required">{formErrors.lastName}</p>
-            <button onClick={handleSubmit}>envoyer</button>
+            <form onSubmit={handleSubmit}>
+              <p>Nom</p>
+              <input name="name" type="text" onChange={handleChange} />
+              <p className="required">{formErrors.name}</p>
+
+              <p>Prenom</p>
+              <input name="lastName" type="text" onChange={handleChange} />
+              <p className="required">{formErrors.lastName}</p>
+              <button type="submit">envoyer</button>
+            </form>
           </Modal.Body>
         </Modal>
       )}
